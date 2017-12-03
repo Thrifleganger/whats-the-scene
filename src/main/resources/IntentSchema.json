@@ -1,0 +1,27 @@
+{
+  "intents": [
+    {
+      "intent": "HelloIntent"
+    },
+    {
+      "intent": "GigSearchIntent",
+      "slots": [
+        {
+          "name": "Band"
+        },
+        {
+          "name": "Location"
+        }
+      ]
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    }
+  ]
+}

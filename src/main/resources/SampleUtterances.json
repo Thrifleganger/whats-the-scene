@@ -1,0 +1,8 @@
+HelloIntent say hello
+
+GigSearchIntent gigs for {Band}
+GigSearchIntent when {Band} are playing next
+GigSearchIntent when {Band} are playing
+GigSearchIntent when {Band} next gig is
+GigSearchIntent when {Band} are playing in {Location}
+GigSearchIntent when {Band} are in {Location}

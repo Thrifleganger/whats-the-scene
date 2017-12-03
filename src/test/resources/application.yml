@@ -1,0 +1,17 @@
+alexa:
+  application-id: amzn1.ask.skill.11fbb08b-fe35-4995-b585-7b888737ac5a
+rest:
+  bands-in-town:
+    upcoming-events:
+      base-url: https://rest.bandsintown.com/artists/
+  eventful:
+    events:
+      baseUrl: http://api.eventful.com/json/events/search?
+      applicationKey: PVGpX9Rmnhx6nbsq
+      appKeyParam: app_key
+      keywordsParam: keywords
+      locationParam: location
+      dateParam: date
+      categoryParam: category
+      pageSizeParam: page_size
+      sortOrderParam: sort_order
