@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.Set;
 
-@Component
+/*@Component
 public class SceneSpeechletRequestStreamHandler extends SpeechletRequestStreamHandler {
 
     private static final Set<String> supportedApplicationIds;
@@ -28,6 +28,4 @@ public class SceneSpeechletRequestStreamHandler extends SpeechletRequestStreamHa
                 )
         )), supportedApplicationIds);
     }
-
-
-}
+}*/

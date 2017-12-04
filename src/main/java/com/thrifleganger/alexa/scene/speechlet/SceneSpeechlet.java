@@ -3,7 +3,6 @@ package com.thrifleganger.alexa.scene.speechlet;
 import com.amazon.speech.json.SpeechletRequestEnvelope;
 import com.amazon.speech.slu.Intent;
 import com.amazon.speech.speechlet.*;
-import com.thrifleganger.alexa.scene.handler.BandsInTownHandler;
 import com.thrifleganger.alexa.scene.handler.EventfulHandler;
 import com.thrifleganger.alexa.scene.utils.AlexaHelper;
 import com.thrifleganger.alexa.scene.utils.Conversation;

@@ -1,9 +1,8 @@
+/*
 package com.thrifleganger.alexa.scene.test.service;
 
 import com.thrifleganger.alexa.scene.exception.handler.RestResult;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulRequest;
-import com.thrifleganger.alexa.scene.model.eventful.EventfulResponse;
-import com.thrifleganger.alexa.scene.service.BandsInTownRestService;
 import com.thrifleganger.alexa.scene.model.bandsintown.EventDataModel;
 import com.thrifleganger.alexa.scene.service.EventfulRestService;
 import lombok.extern.slf4j.Slf4j;
@@ -13,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.swing.text.html.Option;
-import java.util.List;
 import java.util.Optional;
 
 @RunWith(SpringRunner.class)
@@ -39,3 +36,4 @@ public class EventfulRestServiceTest {
         log.info(response.getResultObject().get().toString());
     }
 }
+*/

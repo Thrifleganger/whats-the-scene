@@ -3,6 +3,8 @@ package com.thrifleganger.alexa.scene.handler;
 import com.amazon.speech.json.SpeechletRequestEnvelope;
 import com.amazon.speech.speechlet.IntentRequest;
 import com.amazon.speech.speechlet.SpeechletResponse;
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 import com.thrifleganger.alexa.scene.exception.handler.RestResult;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulRequest;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulResponse;
@@ -16,13 +18,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class EventfulHandler {
+public class EventfulHandler implements RequestStreamHandler {
+    @Override
+    public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
+        this.handleRequest(inputStream, outputStream, context);
+    }
 
     private final EventfulRestService eventfulRestService;
 

@@ -1,5 +1,6 @@
 package com.thrifleganger.alexa.scene.configuration;
 
+import com.thrifleganger.alexa.scene.handler.EventfulHandler;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +30,7 @@ public class BeanConfiguration {
         return httpHeaders;
     }
 
-    @Bean
+    /*@Bean
     public EventfulEventProperties eventfulPropertiesBuilder() {
         return EventfulEventProperties.builder()
                 .appKeyParam("app_key")
@@ -42,6 +43,6 @@ public class BeanConfiguration {
                 .pageSizeParam("page_size")
                 .sortOrderParam("sort_order")
                 .build();
-    }
+    }*/
 
 }

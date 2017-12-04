@@ -6,9 +6,7 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
-@Setter
-@Builder
-//@ConfigurationProperties(prefix = "rest.eventful.events")
+@ConfigurationProperties(prefix = "rest.eventful.events")
 public class EventfulEventProperties {
 
     private String baseUrl;
