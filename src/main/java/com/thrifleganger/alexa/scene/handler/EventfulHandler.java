@@ -1,8 +1,12 @@
 package com.thrifleganger.alexa.scene.handler;
 
 import com.amazon.speech.json.SpeechletRequestEnvelope;
+import com.amazon.speech.slu.ConfirmationStatus;
 import com.amazon.speech.speechlet.IntentRequest;
 import com.amazon.speech.speechlet.SpeechletResponse;
+import com.amazon.speech.speechlet.dialog.directives.DelegateDirective;
+import com.amazon.speech.speechlet.dialog.directives.DialogIntent;
+import com.amazon.speech.speechlet.dialog.directives.ElicitSlotDirective;
 import com.thrifleganger.alexa.scene.exception.handler.RestResult;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulRequest;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulResponse;
@@ -16,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -26,9 +31,34 @@ public class EventfulHandler {
 
     private final EventfulRestService eventfulRestService;
 
-    public SpeechletResponse handleHello(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
+    public SpeechletResponse handleWelcome(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
         log.info("HelloIntent");
-        return SpeechletResponse.newTellResponse(AlexaHelper.speech("Hello there."));
+        return SpeechletResponse.newAskResponse(
+                AlexaHelper.speech(Conversation.WELCOME),
+                AlexaHelper.reprompt(Conversation.WELCOME_REPROMPT));
+    }
+
+    public SpeechletResponse handleSceneInvocationIntent(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
+        IntentRequest request = requestEnvelope.getRequest();
+        if(request.getDialogState() != IntentRequest.DialogState.COMPLETED) {
+
+            DialogIntent updatedIntent = new DialogIntent(request.getIntent());
+            if(updatedIntent.getConfirmationStatus() == ConfirmationStatus.DENIED) {
+                clearSlotValuesForRetry(updatedIntent);
+                ElicitSlotDirective elicitSlotDirective = new ElicitSlotDirective();
+                elicitSlotDirective.setSlotToElicit("");
+                //
+            }
+            DelegateDirective delegateDirective = new DelegateDirective();
+            delegateDirective.setUpdatedIntent(updatedIntent);
+
+            SpeechletResponse response = new SpeechletResponse();
+            response.setDirectives(Collections.singletonList(delegateDirective));
+            response.setNullableShouldEndSession(false);
+            return response;
+        } else {
+            return handleGenericRequest(requestEnvelope, buildEventfulRequestAfterDialogEnds(request));
+        }
     }
 
     public SpeechletResponse handleGigSearch(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
@@ -182,5 +212,24 @@ public class EventfulHandler {
         } else if(!isNull(response.getTotal_items())) {
             string.append(String.format(Conversation.FOUND_RESULTS, response.getTotal_items()));
         }
+    }
+
+    private EventfulRequest buildEventfulRequestAfterDialogEnds(IntentRequest intentRequest) {
+        log.info("Inside buildEventfulRequestAfterDialogEnds");
+        EventfulRequest eventfulRequest = buildDefaultRequest();
+        eventfulRequest.setKeywords(Optional.of(intentRequest.getIntent().getSlot("keywords").getValue()));
+        eventfulRequest.setLocation(Optional.of(intentRequest.getIntent().getSlot("location").getValue()));
+        eventfulRequest.setDate(Optional.of(intentRequest.getIntent().getSlot("date").getValue()));
+        log.info(eventfulRequest.toString());
+        return eventfulRequest;
+    }
+
+    private void clearSlotValuesForRetry(DialogIntent intent) {
+        intent.getSlots().forEach(
+                (s, dialogSlot) -> {
+                    dialogSlot.setValue(null);
+                    dialogSlot.setConfirmationStatus(ConfirmationStatus.NONE);
+                }
+        );
     }
 }

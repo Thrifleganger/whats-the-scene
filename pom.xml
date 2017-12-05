@@ -23,7 +23,7 @@
         <dependency>
             <groupId>com.amazon.alexa</groupId>
             <artifactId>alexa-skills-kit</artifactId>
-            <version>1.2</version>
+            <version>LATEST</version>
             <exclusions>
                 <exclusion>
                     <groupId>log4j</groupId>
