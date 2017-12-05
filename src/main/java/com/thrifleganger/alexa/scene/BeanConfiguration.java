@@ -1,11 +1,21 @@
-package com.thrifleganger.alexa.scene.configuration;
+package com.thrifleganger.alexa.scene;
 
-import com.thrifleganger.alexa.scene.handler.EventfulHandler;
+import com.amazon.speech.Sdk;
+import com.amazon.speech.speechlet.SpeechletRequestHandler;
+import com.amazon.speech.speechlet.lambda.LambdaSpeechletRequestHandler;
+import com.thrifleganger.alexa.scene.configuration.EventfulEventProperties;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Configuration
 public class BeanConfiguration {
@@ -45,4 +55,10 @@ public class BeanConfiguration {
                 .build();
     }*/
 
+    @Bean
+    public SpeechletRequestHandler speechletRequestHandler() {
+        Set<String> supportedApplicationIds = new HashSet<String>();
+        supportedApplicationIds.add("amzn1.ask.skill.11fbb08b-fe35-4995-b585-7b888737ac5a");
+        return new LambdaSpeechletRequestHandler(supportedApplicationIds);
+    }
 }

@@ -1,3 +1,4 @@
+
 package com.thrifleganger.alexa.scene;
 
 import com.amazon.speech.Sdk;
@@ -6,10 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 @EnableConfigurationProperties(EventfulEventProperties.class)
 public class Application {
+
+    private ApplicationContext applicationContext;
+
+    public void run() {
+        applicationContext = SpringApplication.run(Application.class);
+    }
+
+    public ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
 
     public static void main(String[] args) {
         setAmazonProperties();

@@ -3,9 +3,11 @@ package com.thrifleganger.alexa.scene.configuration;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
+@ToString
 @ConfigurationProperties(prefix = "rest.eventful.events")
 public class EventfulEventProperties {
 

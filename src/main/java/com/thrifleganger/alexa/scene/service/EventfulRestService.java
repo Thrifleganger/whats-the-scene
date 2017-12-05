@@ -6,6 +6,7 @@ import com.thrifleganger.alexa.scene.exception.handler.RestResult;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulRequest;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class EventfulRestService {
 
@@ -47,6 +49,8 @@ public class EventfulRestService {
 
     //Make sure no spaces
     private String generateRestEndpointUrl(EventfulRequest request) {
+
+        log.info(properties.toString());
 
         StringBuilder urlString = new StringBuilder();
         urlString.append(properties.getBaseUrl())

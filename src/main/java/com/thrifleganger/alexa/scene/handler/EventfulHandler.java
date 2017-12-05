@@ -9,6 +9,7 @@ import com.thrifleganger.alexa.scene.exception.handler.RestResult;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulRequest;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulResponse;
 import com.thrifleganger.alexa.scene.service.EventfulRestService;
+import com.thrifleganger.alexa.scene.speechlet.SceneSpeechlet;
 import com.thrifleganger.alexa.scene.utils.AlexaHelper;
 import com.thrifleganger.alexa.scene.utils.Conversation;
 import com.thrifleganger.alexa.scene.utils.DateUtil;
@@ -27,11 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class EventfulHandler implements RequestStreamHandler {
-    @Override
-    public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
-        this.handleRequest(inputStream, outputStream, context);
-    }
+public class EventfulHandler {
 
     private final EventfulRestService eventfulRestService;
 

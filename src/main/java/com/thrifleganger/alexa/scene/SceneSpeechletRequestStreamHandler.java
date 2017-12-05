@@ -1,17 +1,23 @@
+/*
 package com.thrifleganger.alexa.scene;
 
 import com.amazon.speech.speechlet.lambda.SpeechletRequestStreamHandler;
-import com.thrifleganger.alexa.scene.configuration.BeanConfiguration;
+import com.thrifleganger.alexa.scene.BeanConfiguration;
+import com.thrifleganger.alexa.scene.configuration.EventfulEventProperties;
 import com.thrifleganger.alexa.scene.handler.EventfulHandler;
 import com.thrifleganger.alexa.scene.service.EventfulRestService;
 import com.thrifleganger.alexa.scene.speechlet.SceneSpeechlet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
 
-/*@Component
+@Component
 public class SceneSpeechletRequestStreamHandler extends SpeechletRequestStreamHandler {
+
+    @Autowired
+    SceneSpeechlet sceneSpeechlet;
 
     private static final Set<String> supportedApplicationIds;
     static {
@@ -20,12 +26,13 @@ public class SceneSpeechletRequestStreamHandler extends SpeechletRequestStreamHa
     }
 
     public SceneSpeechletRequestStreamHandler() {
-        super(new SceneSpeechlet(new EventfulHandler(
-                new EventfulRestService(
-                        new BeanConfiguration().restTemplate(),
-                        new BeanConfiguration().eventfulPropertiesBuilder(),
-                        new BeanConfiguration().httpHeaders()
-                )
-        )), supportedApplicationIds);
+
     }
-}*/
+
+    public SceneSpeechletRequestStreamHandler(SceneSpeechlet sceneSpeechlet, Set<String> set) {
+        super(sceneSpeechlet, set);
+    }
+
+
+}
+*/
