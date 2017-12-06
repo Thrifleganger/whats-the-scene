@@ -44,10 +44,15 @@ public class EventfulHandler {
 
             DialogIntent updatedIntent = new DialogIntent(request.getIntent());
             if(updatedIntent.getConfirmationStatus() == ConfirmationStatus.DENIED) {
+                updatedIntent.setConfirmationStatus(ConfirmationStatus.NONE);
                 clearSlotValuesForRetry(updatedIntent);
                 ElicitSlotDirective elicitSlotDirective = new ElicitSlotDirective();
-                elicitSlotDirective.setSlotToElicit("");
-                //
+                elicitSlotDirective.setSlotToElicit("category");
+                SpeechletResponse response = new SpeechletResponse();
+                response.setNullableShouldEndSession(false);
+                response.setDirectives(Collections.singletonList(elicitSlotDirective));
+                response.setOutputSpeech(AlexaHelper.speech("Let's try again. Which category are you looking for? "));
+                return response;
             }
             DelegateDirective delegateDirective = new DelegateDirective();
             delegateDirective.setUpdatedIntent(updatedIntent);
