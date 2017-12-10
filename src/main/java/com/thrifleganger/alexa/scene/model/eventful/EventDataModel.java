@@ -40,6 +40,6 @@ public class EventDataModel {
     private String modified;
     private String owner;
 
-    private PerformerRootModel performers;
-    private ImageRootModel image;
+    //private PerformerRootModel performers;
+    //private ImageRootModel image;
 }

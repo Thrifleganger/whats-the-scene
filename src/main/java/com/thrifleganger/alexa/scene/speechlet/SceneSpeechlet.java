@@ -3,7 +3,6 @@ package com.thrifleganger.alexa.scene.speechlet;
 import com.amazon.speech.json.SpeechletRequestEnvelope;
 import com.amazon.speech.slu.Intent;
 import com.amazon.speech.speechlet.*;
-import com.thrifleganger.alexa.scene.handler.BandsInTownHandler;
 import com.thrifleganger.alexa.scene.handler.EventfulHandler;
 import com.thrifleganger.alexa.scene.utils.AlexaHelper;
 import com.thrifleganger.alexa.scene.utils.Conversation;
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SceneSpeechlet implements SpeechletV2 {
 
-    private final EventfulHandler gigsHandler;
+    private final EventfulHandler eventfulHandler;
 
     @Override
     public void onSessionStarted(SpeechletRequestEnvelope<SessionStartedRequest> speechletRequestEnvelope) {
@@ -26,18 +25,25 @@ public class SceneSpeechlet implements SpeechletV2 {
 
     @Override
     public SpeechletResponse onLaunch(SpeechletRequestEnvelope<LaunchRequest> speechletRequestEnvelope) {
-        return SpeechletResponse.newTellResponse(AlexaHelper.speech(Conversation.WELCOME));
+        return SpeechletResponse.newAskResponse(AlexaHelper.speech(Conversation.WELCOME),
+                AlexaHelper.reprompt(Conversation.WELCOME_REPROMPT));
     }
 
     @Override
     public SpeechletResponse onIntent(SpeechletRequestEnvelope<IntentRequest> speechletRequestEnvelope) {
-        log.info("Intent triggered");
         Intent incomingIntent = speechletRequestEnvelope.getRequest().getIntent();
+        log.info("Intent triggered: " + incomingIntent.getName());
         switch (incomingIntent.getName()) {
-            case "HelloIntent":
-                return gigsHandler.handleHello(speechletRequestEnvelope);
+            case "SceneInvocationIntent":
+                return eventfulHandler.handleSceneInvocationIntent(speechletRequestEnvelope);
             case "GigSearchIntent":
-                return gigsHandler.handleGigSearch(speechletRequestEnvelope);
+                return eventfulHandler.handleGigSearch(speechletRequestEnvelope);
+            case "AMAZON.StopIntent":
+                return eventfulHandler.handleStopEvent(speechletRequestEnvelope);
+            case "AMAZON.HelpIntent":
+                return eventfulHandler.handleHelpEvent(speechletRequestEnvelope);
+            case "AMAZON.CancelIntent":
+                return eventfulHandler.handleCancelEvent(speechletRequestEnvelope);
             default:
                 throw new IllegalArgumentException("Unknown Intent: " + incomingIntent.getName());
         }

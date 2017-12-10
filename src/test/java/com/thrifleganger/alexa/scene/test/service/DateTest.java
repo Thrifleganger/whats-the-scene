@@ -1,5 +1,6 @@
 package com.thrifleganger.alexa.scene.test.service;
 
+import com.thrifleganger.alexa.scene.model.eventful.enumeration.Category;
 import com.thrifleganger.alexa.scene.utils.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -24,5 +25,12 @@ public class DateTest {
         log.info(DateUtil.getFormattedDate(date));
         log.info(DateUtil.getFormattedTime(date));
 
+    }
+
+    @Test
+    public void containsTest() {
+        String music = "gig";
+        log.info(Category.MUSIC.getTags());
+        log.info(String.valueOf(Category.MUSIC.getTags().contains(music)));
     }
 }
