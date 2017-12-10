@@ -6,6 +6,7 @@ import com.thrifleganger.alexa.scene.exception.handler.RestResult;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulRequest;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class EventfulRestService {
@@ -34,6 +36,7 @@ public class EventfulRestService {
                     new HttpEntity<>(headers),
                     String.class
             );
+            log.info("Sending request to Eventful: " + generateRestEndpointUrl(request));
             return RestResult.success(
                     new ObjectMapper().readValue(
                             response.getBody(),
@@ -58,28 +61,28 @@ public class EventfulRestService {
                         urlString.append(SEPARATOR)
                                 .append(properties.getCategoryParam())
                                 .append(EQUALS)
-                                .append(category)
+                                .append(eliminateWhiteSpace(category))
                 );
         request.getDate()
                 .ifPresent(date ->
                         urlString.append(SEPARATOR)
                                 .append(properties.getDateParam())
                                 .append(EQUALS)
-                                .append(date)
+                                .append(eliminateWhiteSpace(date))
                 );
         request.getLocation()
                 .ifPresent(location ->
                         urlString.append(SEPARATOR)
                                 .append(properties.getLocationParam())
                                 .append(EQUALS)
-                                .append(location)
+                                .append(eliminateWhiteSpace(location))
                 );
         request.getKeywords()
                 .ifPresent(keywords ->
                         urlString.append(SEPARATOR)
                                 .append(properties.getKeywordsParam())
                                 .append(EQUALS)
-                                .append(keywords)
+                                .append(eliminateWhiteSpace(keywords))
                 );
         request.getSortBy()
                 .ifPresent(sortBy ->
@@ -96,5 +99,9 @@ public class EventfulRestService {
                                 .append(pageSize)
                 );
         return urlString.toString();
+    }
+
+    private String eliminateWhiteSpace(final String string) {
+        return string.replaceAll(" ", "+");
     }
 }

@@ -20,13 +20,10 @@ public class SceneSpeechletRequestStreamHandler extends SpeechletRequestStreamHa
     }
 
     public SceneSpeechletRequestStreamHandler() {
-        super(new SceneSpeechlet(new EventfulHandler(
-                new EventfulRestService(
-                        new BeanConfiguration().restTemplate(),
-                        new BeanConfiguration().eventfulPropertiesBuilder(),
-                        new BeanConfiguration().httpHeaders()
-                )
-        )), supportedApplicationIds);
+        super(new SceneSpeechlet(
+                new BeanConfiguration().getEventfulHandler()),
+                supportedApplicationIds
+        );
     }
 
 

@@ -1,3 +1,6 @@
+server:
+  port:
+    9999
 alexa:
   application-id: amzn1.ask.skill.11fbb08b-fe35-4995-b585-7b888737ac5a
 rest:

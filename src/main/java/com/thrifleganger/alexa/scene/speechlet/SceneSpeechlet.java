@@ -31,13 +31,19 @@ public class SceneSpeechlet implements SpeechletV2 {
 
     @Override
     public SpeechletResponse onIntent(SpeechletRequestEnvelope<IntentRequest> speechletRequestEnvelope) {
-        log.info("Intent triggered");
         Intent incomingIntent = speechletRequestEnvelope.getRequest().getIntent();
+        log.info("Intent triggered: " + incomingIntent.getName());
         switch (incomingIntent.getName()) {
             case "SceneInvocationIntent":
                 return eventfulHandler.handleSceneInvocationIntent(speechletRequestEnvelope);
             case "GigSearchIntent":
                 return eventfulHandler.handleGigSearch(speechletRequestEnvelope);
+            case "AMAZON.StopIntent":
+                return eventfulHandler.handleStopEvent(speechletRequestEnvelope);
+            case "AMAZON.HelpIntent":
+                return eventfulHandler.handleHelpEvent(speechletRequestEnvelope);
+            case "AMAZON.CancelIntent":
+                return eventfulHandler.handleCancelEvent(speechletRequestEnvelope);
             default:
                 throw new IllegalArgumentException("Unknown Intent: " + incomingIntent.getName());
         }

@@ -6,23 +6,26 @@ import com.amazon.speech.speechlet.IntentRequest;
 import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.speechlet.dialog.directives.DelegateDirective;
 import com.amazon.speech.speechlet.dialog.directives.DialogIntent;
-import com.amazon.speech.speechlet.dialog.directives.ElicitSlotDirective;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thrifleganger.alexa.scene.exception.handler.RestResult;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulRequest;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulResponse;
+import com.thrifleganger.alexa.scene.model.eventful.enumeration.Category;
+import com.thrifleganger.alexa.scene.model.eventful.enumeration.Slot;
+import com.thrifleganger.alexa.scene.model.eventful.enumeration.Sort;
 import com.thrifleganger.alexa.scene.service.EventfulRestService;
-import com.thrifleganger.alexa.scene.utils.AlexaHelper;
-import com.thrifleganger.alexa.scene.utils.Conversation;
-import com.thrifleganger.alexa.scene.utils.DateUtil;
-import com.thrifleganger.alexa.scene.utils.Ssml;
+import com.thrifleganger.alexa.scene.utils.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -30,6 +33,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class EventfulHandler {
 
     private final EventfulRestService eventfulRestService;
+    private final EventfulHandlerUtils eventfulHandlerUtils;
 
     public SpeechletResponse handleWelcome(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
         log.info("HelloIntent");
@@ -39,36 +43,46 @@ public class EventfulHandler {
     }
 
     public SpeechletResponse handleSceneInvocationIntent(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
+        //log.info(ToStringBuilder.reflectionToString(requestEnvelope.getRequest().getIntent()));
+        /*try {
+            log.info(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(requestEnvelope.getRequest().getIntent()));
+        } catch (JsonProcessingException ex) {
+            log.info(ex.getMessage());
+        }*/
         IntentRequest request = requestEnvelope.getRequest();
-        if(request.getDialogState() != IntentRequest.DialogState.COMPLETED) {
-
-            DialogIntent updatedIntent = new DialogIntent(request.getIntent());
-            if(updatedIntent.getConfirmationStatus() == ConfirmationStatus.DENIED) {
-                updatedIntent.setConfirmationStatus(ConfirmationStatus.NONE);
-                clearSlotValuesForRetry(updatedIntent);
-                ElicitSlotDirective elicitSlotDirective = new ElicitSlotDirective();
-                elicitSlotDirective.setSlotToElicit("category");
-                SpeechletResponse response = new SpeechletResponse();
-                response.setNullableShouldEndSession(false);
-                response.setDirectives(Collections.singletonList(elicitSlotDirective));
-                response.setOutputSpeech(AlexaHelper.speech("Let's try again. Which category are you looking for? "));
-                return response;
-            }
-            DelegateDirective delegateDirective = new DelegateDirective();
-            delegateDirective.setUpdatedIntent(updatedIntent);
-
-            SpeechletResponse response = new SpeechletResponse();
-            response.setDirectives(Collections.singletonList(delegateDirective));
-            response.setNullableShouldEndSession(false);
-            return response;
-        } else {
+        if(request.getDialogState().equals(IntentRequest.DialogState.COMPLETED)) {
             return handleGenericRequest(requestEnvelope, buildEventfulRequestAfterDialogEnds(request));
         }
+        DialogIntent updatedIntent = new DialogIntent(request.getIntent());
+        if(updatedIntent.getConfirmationStatus().equals(ConfirmationStatus.DENIED)) {
+            return eventfulHandlerUtils.elicitResponseToRestartDialog(updatedIntent);
+        }
+        if(!isSlotValueNull(updatedIntent, Slot.CATEGORY) && !isSlotStatusConfirmed(updatedIntent, Slot.CATEGORY)) {
+            if(isCategoryValid(updatedIntent)) {
+                setTypeSafeCategoryAndConfirmStatus(updatedIntent);
+            } else {
+                return eventfulHandlerUtils.elicitResponseToReinitializeCategorySlot(updatedIntent);
+            }
+        }
+        return eventfulHandlerUtils.delegateResponseToContinueDialog(updatedIntent);
     }
+
+
 
     public SpeechletResponse handleGigSearch(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
         log.info("GigSearchIntent");
-        EventfulRequest eventfulRequest = buildDefaultRequest();
+        /*try {
+            log.info(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(requestEnvelope.getRequest().getIntent()));
+        } catch (JsonProcessingException ex) {
+            log.info(ex.getMessage());
+        }*/
+        IntentRequest request = requestEnvelope.getRequest();
+        if(request.getDialogState().equals(IntentRequest.DialogState.COMPLETED)) {
+            return handleGenericRequest(requestEnvelope, buildEventfulRequestAfterDialogEnds(request));
+        }
+        DialogIntent updatedIntent = new DialogIntent(request.getIntent());
+        return eventfulHandlerUtils.delegateResponseToContinueDialog(updatedIntent);
+        /*EventfulRequest eventfulRequest = buildDefaultRequest();
         eventfulRequest.setKeywords(
                 replaceWhitespaces(AlexaHelper.getSlotValue(
                         requestEnvelope.getRequest().getIntent(),
@@ -80,9 +94,26 @@ public class EventfulHandler {
                         requestEnvelope.getRequest().getIntent(),
                         "Location")
                 )
-        );
+        );*/
 
-        return handleGenericRequest(requestEnvelope, eventfulRequest);
+        //return handleGenericRequest(requestEnvelope, eventfulRequest);
+    }
+
+    public SpeechletResponse handleStopEvent(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
+        return SpeechletResponse.newTellResponse(
+                AlexaHelper.speech(Conversation.GOODBYE)
+        );
+    }
+
+    public SpeechletResponse handleHelpEvent(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
+        return SpeechletResponse.newTellResponse(AlexaHelper.speech("Come on! You know what to do"));
+    }
+
+    public SpeechletResponse handleCancelEvent(SpeechletRequestEnvelope<IntentRequest> speechletRequestEnvelope) {
+        return SpeechletResponse.newAskResponse(
+                AlexaHelper.speech(Conversation.RESTART + Conversation.WELCOME),
+                AlexaHelper.reprompt(Conversation.WELCOME_REPROMPT)
+        );
     }
 
     private SpeechletResponse handleGenericRequest(
@@ -128,11 +159,11 @@ public class EventfulHandler {
                     conversationBuilder.append(String.format(
                             Ssml.RESULT_EXPANDED,
                             voiceCounter.incrementAndGet(),
-                            checkForNull(eventDataModel.getTitle(), Conversation.UNKNOWN_EVENT),
-                            checkForNull(eventDataModel.getVenue_name(), Conversation.UNKNOWN_VENUE),
+                            checkForNull(validateSsml(eventDataModel.getTitle()), Conversation.UNKNOWN_EVENT),
+                            checkForNull(validateSsml(eventDataModel.getVenue_name()), Conversation.UNKNOWN_VENUE),
                             checkForNull(DateUtil.getFormattedDate(eventDataModel.getStart_time()), Conversation.UNKNOWN_DATE),
                             checkForNull(DateUtil.getFormattedTime(eventDataModel.getStart_time()), Conversation.UNKNOWN_TIME),
-                            checkForNull(eventDataModel.getCity_name(), Conversation.UNKNOWN_LOCATION)
+                            checkForNull(validateSsml(eventDataModel.getCity_name()), Conversation.UNKNOWN_LOCATION)
                         )
                     );
                     cardContentBuilder.append(String.format(
@@ -184,7 +215,7 @@ public class EventfulHandler {
         return object == null;
     }
 
-    private String getImageUrl(EventfulResponse response) {
+    /*private String getImageUrl(EventfulResponse response) {
         StringBuilder url = new StringBuilder();
         response
                 .getEvents()
@@ -195,7 +226,7 @@ public class EventfulHandler {
                         .append(eventDataModel.getImage().getMedium().getUrl())
                 );
         return url.toString();
-    }
+    }*/
 
     private void handleSingleAndMultipleResponsesForConversation(StringBuilder string, EventfulResponse response) {
         if(!isNull(response.getTotal_items()) && response.getTotal_items() == 1) {
@@ -220,21 +251,72 @@ public class EventfulHandler {
     }
 
     private EventfulRequest buildEventfulRequestAfterDialogEnds(IntentRequest intentRequest) {
-        log.info("Inside buildEventfulRequestAfterDialogEnds");
         EventfulRequest eventfulRequest = buildDefaultRequest();
-        eventfulRequest.setKeywords(Optional.of(intentRequest.getIntent().getSlot("keywords").getValue()));
-        eventfulRequest.setLocation(Optional.of(intentRequest.getIntent().getSlot("location").getValue()));
-        eventfulRequest.setDate(Optional.of(intentRequest.getIntent().getSlot("date").getValue()));
+        final String keywords = intentRequest.getIntent().getSlot(Slot.KEYWORDS.getValue()).getValue();
+        eventfulRequest.setKeywords(Optional.ofNullable(
+                keywords.contains("anything") ? null : keywords
+        ));
+        eventfulRequest.setLocation(Optional.ofNullable(intentRequest.getIntent().getSlot(Slot.LOCATION.getValue()).getValue()));
+        eventfulRequest.setDate(Optional.ofNullable(intentRequest.getIntent().getSlot(Slot.DATE.getValue()).getValue()));
+        eventfulRequest.setCategory(Optional.ofNullable(intentRequest.getIntent().getSlot(Slot.CATEGORY.getValue()).getValue()));
+        eventfulRequest.setSortBy(Optional.ofNullable(Sort.DATE));
+        eventfulRequest.setPageSize(Optional.of(5));
         log.info(eventfulRequest.toString());
         return eventfulRequest;
     }
 
-    private void clearSlotValuesForRetry(DialogIntent intent) {
-        intent.getSlots().forEach(
-                (s, dialogSlot) -> {
-                    dialogSlot.setValue(null);
-                    dialogSlot.setConfirmationStatus(ConfirmationStatus.NONE);
-                }
-        );
+
+
+    private void setTypeSafeCategoryAndConfirmStatus(final DialogIntent updatedIntent) {
+        updatedIntent.getSlots().entrySet()
+                .stream()
+                .filter(slotEntry -> Slot.CATEGORY.getValue().equals(slotEntry.getKey()))
+                .forEach(slotEntry -> {
+                    slotEntry.getValue().setValue(returnTypeSafeCategoryFor(slotEntry.getValue().getValue()));
+                    slotEntry.getValue().setConfirmationStatus(ConfirmationStatus.CONFIRMED);
+                });
+    }
+
+    private String returnTypeSafeCategoryFor(final String value) {
+        return Arrays.stream(Category.values())
+                .filter(category -> category.getTags().contains(value))
+                .map(category -> category.getKeyword())
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+    }
+
+    private boolean isCategoryValid(DialogIntent intent) {
+
+        return intent.getSlots().entrySet()
+                .stream()
+                .filter(slotEntry -> Slot.CATEGORY.getValue().equals(slotEntry.getKey()))
+                .map(slotEntry -> slotEntry.getValue().getValue())
+                .anyMatch(slotValue ->
+                    Arrays.stream(Category.values())
+                            .filter(category -> category.getTags().contains(slotValue.toLowerCase()))
+                            .collect(Collectors.toList()).size() == 1
+                );
+    }
+
+    private boolean isSlotStatusConfirmed(final DialogIntent updatedIntent, final Slot slot) {
+        return updatedIntent.getSlots().entrySet()
+                .stream()
+                .filter(slotEntry -> slot.getValue().equals(slotEntry.getKey()))
+                .map(slotEntry -> slotEntry.getValue().getConfirmationStatus())
+                .noneMatch(confirmationStatus -> confirmationStatus.equals(ConfirmationStatus.NONE));
+    }
+
+    private boolean isSlotValueNull(final DialogIntent intent, final Slot slot) {
+        return intent.getSlots().entrySet()
+                .stream()
+                .filter(slotEntry -> slot.getValue().equals(slotEntry.getKey()))
+                .anyMatch(slotEntry -> slotEntry.getValue().getValue() == null);
+    }
+
+    private String validateSsml(final String ssml) {
+        return ssml.replaceAll("&", "and")
+                .replaceAll("<", "")
+                .replaceAll(">", "");
+
     }
 }
