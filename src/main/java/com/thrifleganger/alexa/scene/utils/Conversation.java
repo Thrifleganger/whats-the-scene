@@ -13,6 +13,9 @@ public class Conversation {
     public static final String READING_OUT_RESULTS = "Reading out the first %s results. ";
     public static final String RESULT_EXPANDED = "%s, %s at %s on %s in %s. ";
     public static final String GOODBYE = "Thank you for using What's the scene. Sponsored by Wheatabix protein. Don't think, just eat. ";
+    public static final String FETCH_MORE_RESULTS = "Would you like me to fetch more results? Or, ";
+    public static final String EXPAND_MANY_FURTHER = "just recite the number of the entry that you heard for a more detailed description. ";
+    public static final String EXPAND_ONE_RESULT_FURTHER = "Would you like a more detailed description for this result? ";
 
     //Recovery
     public static final String SCENE_DIALOG_RESTART = "Let's try again. Which category of events are you looking for? ";
@@ -20,6 +23,7 @@ public class Conversation {
             "%s. Which category are you looking for? ";
 
     //Reprompt
+    public static final String GENERIC_REPROMT = "I didn't get a response. ";
     public static final String WELCOME_REPROMPT = "I didn't get a response. You can ask me something specific, or just say, What's going on in town, for an interactive walkthrough. ";
 
 

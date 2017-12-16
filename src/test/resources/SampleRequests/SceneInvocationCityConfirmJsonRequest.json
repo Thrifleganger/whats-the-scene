@@ -1,0 +1,72 @@
+{
+  "version": "1.0",
+  "session": {
+    "new": false,
+    "sessionId": "amzn1.echo-api.session.7d3c7f93-8a94-4658-a4bc-0fdcaa841960",
+    "application": {
+      "applicationId": "amzn1.ask.skill.11fbb08b-fe35-4995-b585-7b888737ac5a"
+    },
+    "user": {
+      "userId": "amzn1.ask.account.AEJL652AXZZOTUHSHLIGK4XQ5ROXA5PA3YENV37YAKTDT4K75LEX6MRZEZ3J3FCOAQD4IRPAGIXUIG27PHD62WFKJRHKY6PLHDGEO5IMNXNGDDHLDWEYVQ3HH63TQLMQGJBKD47O6AM7UG2LTJIZQ2XFW7MZZR7MWMUS3OFSAZUSIUI5QMEQZETTGW7S4XEPSVKPFEBYNF6KCFY"
+    }
+  },
+  "context": {
+    "AudioPlayer": {
+      "playerActivity": "IDLE"
+    },
+    "Display": {
+      "token": ""
+    },
+    "System": {
+      "application": {
+        "applicationId": "amzn1.ask.skill.11fbb08b-fe35-4995-b585-7b888737ac5a"
+      },
+      "user": {
+        "userId": "amzn1.ask.account.AEJL652AXZZOTUHSHLIGK4XQ5ROXA5PA3YENV37YAKTDT4K75LEX6MRZEZ3J3FCOAQD4IRPAGIXUIG27PHD62WFKJRHKY6PLHDGEO5IMNXNGDDHLDWEYVQ3HH63TQLMQGJBKD47O6AM7UG2LTJIZQ2XFW7MZZR7MWMUS3OFSAZUSIUI5QMEQZETTGW7S4XEPSVKPFEBYNF6KCFY"
+      },
+      "device": {
+        "deviceId": "amzn1.ask.device.AHJMIEKY76RYMUOTCTAPETLQXUI4G2DGDGFIP2S7Q4DZQD3B22K5372AHWXVGVM2RCBSQCCLCX4HEY4XMLOJIO6BMWJAJSRYIBELG7P7H5QIQEXI5S6QNG5X5VHMT3J2SJ7KUVJV7SO5BUHDGRLOBCTNTRIQ",
+        "supportedInterfaces": {
+          "AudioPlayer": {},
+          "Display": {
+            "templateVersion": "1.0",
+            "markupVersion": "1.0"
+          }
+        }
+      },
+      "apiEndpoint": "https://api.amazonalexa.com",
+      "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLjExZmJiMDhiLWZlMzUtNDk5NS1iNTg1LTdiODg4NzM3YWM1YSIsImV4cCI6MTUxMzMyNTQ3OSwiaWF0IjoxNTEzMzIxODc5LCJuYmYiOjE1MTMzMjE4NzksInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUhKTUlFS1k3NlJZTVVPVENUQVBFVExRWFVJNEcyREdER0ZJUDJTN1E0RFpRRDNCMjJLNTM3MkFIV1hWR1ZNMlJDQlNRQ0NMQ1g0SEVZNFhNTE9KSU82Qk1XSkFKU1JZSUJFTEc3UDdINVFJUUVYSTVTNlFORzVYNVZITVQzSjJTSjdLVVZKVjdTTzVCVUhER1JMT0JDVE5UUklRIiwidXNlcklkIjoiYW16bjEuYXNrLmFjY291bnQuQUVKTDY1MkFYWlpPVFVIU0hMSUdLNFhRNVJPWEE1UEEzWUVOVjM3WUFLVERUNEs3NUxFWDZNUlpFWjNKM0ZDT0FRRDRJUlBBR0lYVUlHMjdQSEQ2MldGS0pSSEtZNlBMSERHRU81SU1OWE5HRERITERXRVlWUTNISDYzVFFMTVFHSkJLRDQ3TzZBTTdVRzJMVEpJWlEyWEZXN01aWlI3TVdNVVMzT0ZTQVpVU0lVSTVRTUVRWkVUVEdXN1M0WEVQU1ZLUEZFQllORjZLQ0ZZIn19.ZIjycanixBskybyzZlUlZcDOn1Lb1gC9bC7Gw7xzM737ftUPb1kdGof621ofGPKAkSRyj8VZV7AaMXXPJ35ZAc43UjaHF60T9gmX-DH0_7sGRpOpStQY8VX-R3fpLaFKeTXr5F9bB1aPvUXLFFxnve6i7hSTIW2jSpsrYT7JSmpv2N9VmY6hJge7jWeR7qsLidjC2qgnWwLmkHua2XdOou_SYCZ39G6alslPuy3NxxvJH_YU9TDbgluWN10w1HIa0qoDzEHF89WEUifWdjIaceoud1easLQgDaQQv7kBkStIfIHQRjL1Og2po1bRc66d_wXnR60-84ZaFRURy7bluw"
+    }
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "amzn1.echo-api.request.74e64bea-a816-40b7-afc2-b37940f4978e",
+    "timestamp": "2017-12-15T07:11:19Z",
+    "locale": "en-GB",
+    "intent": {
+      "name": "SceneInvocationIntent",
+      "confirmationStatus": "NONE",
+      "slots": {
+        "date": {
+          "name": "date",
+          "confirmationStatus": "NONE"
+        },
+        "location": {
+          "name": "location",
+          "value": "Dublin",
+          "confirmationStatus": "NONE"
+        },
+        "keywords": {
+          "name": "keywords",
+          "confirmationStatus": "NONE"
+        },
+        "category": {
+          "name": "category",
+          "value": "music",
+          "confirmationStatus": "CONFIRMED"
+        }
+      }
+    },
+    "dialogState": "IN_PROGRESS"
+  }
+}

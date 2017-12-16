@@ -22,15 +22,6 @@ public class EventfulRestServiceTest {
 
     @Test
     public void callRestServiceTest() {
-        EventfulRequest request = EventfulRequest.builder()
-                .keywords(Optional.of("lord huron"))
-                .location(Optional.of("Dublin"))
-                .category(Optional.empty())
-                .date(Optional.empty())
-                .pageSize(Optional.empty())
-                .sortBy(Optional.empty())
-                .build();
-        RestResult response = restService.callEventSearchEndpoint(request);
-        log.info(response.getResultObject().get().toString());
+
     }
 }

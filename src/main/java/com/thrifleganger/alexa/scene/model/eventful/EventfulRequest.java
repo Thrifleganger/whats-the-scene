@@ -13,10 +13,11 @@ import java.util.Optional;
 @EqualsAndHashCode
 public class EventfulRequest {
 
-    private Optional<String> location;
-    private Optional<String> date;
-    private Optional<String> keywords;
-    private Optional<String> category;
-    private Optional<Sort> sortBy;
-    private Optional<Integer> pageSize;
+    private String location;
+    private String date;
+    private String keywords;
+    private String category;
+    private Sort sortBy;
+    private Integer pageSize;
+    private Integer pageNumber;
 }

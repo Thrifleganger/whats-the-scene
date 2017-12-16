@@ -1,6 +1,7 @@
 package com.thrifleganger.alexa.scene.model.eventful;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,24 +18,40 @@ public class EventDataModel {
     private String url;
     private String title;
     private String description;
-    private String start_time;
-    private String stop_time;
-    private String venue_id;
-    private String venue_url;
-    private String venue_name;
-    private Integer venue_display;
-    private String venue_address;
-    private String city_name;
-    private String region_name;
-    private String region_abbr;
-    private String postal_code;
-    private String country_name;
-    private String country_abbr2;
-    private String olson_path;
-    private Integer all_day;
+    @JsonProperty("start_time")
+    private String startTime;
+    @JsonProperty("stop_time")
+    private String stopTime;
+    @JsonProperty("venue_id")
+    private String venueId;
+    @JsonProperty("venue_url")
+    private String venueUrl;
+    @JsonProperty("venue_name")
+    private String venueName;
+    @JsonProperty("venue_display")
+    private Integer venueDisplay;
+    @JsonProperty("venue_address")
+    private String venueAddress;
+    @JsonProperty("city_name")
+    private String cityName;
+    @JsonProperty("region_name")
+    private String regionName;
+    @JsonProperty("region_abbr")
+    private String regionAbbr;
+    @JsonProperty("postal_code")
+    private String postalCode;
+    @JsonProperty("country_name")
+    private String countryName;
+    @JsonProperty("country_abbr2")
+    private String countryAbbr2;
+    @JsonProperty("olson_path")
+    private String olsonPath;
+    @JsonProperty("all_day")
+    private Integer allDay;
     private Float latitude;
     private Float longitude;
-    private String geocode_type;
+    @JsonProperty("geocode_type")
+    private String geocodeType;
 
     private String created;
     private String modified;

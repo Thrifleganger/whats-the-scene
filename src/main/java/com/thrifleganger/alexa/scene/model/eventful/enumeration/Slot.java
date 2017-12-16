@@ -10,7 +10,8 @@ public enum Slot {
     CATEGORY("category"),
     KEYWORDS("keywords"),
     LOCATION("location"),
-    DATE("date");
+    DATE("date"),
+    NUMBER("number");
 
     private final String value;
 }

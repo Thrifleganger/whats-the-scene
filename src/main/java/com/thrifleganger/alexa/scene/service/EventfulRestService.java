@@ -15,6 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -22,6 +27,14 @@ public class EventfulRestService {
 
     private static final String SEPARATOR = "&";
     private static final String EQUALS = "=";
+    private static final String APP_KEY = "app_key";
+    private static final String CATEGORY = "category";
+    private static final String DATE = "date";
+    private static final String KEYWORDS = "keywords";
+    private static final String LOCATION = "location";
+    private static final String PAGE_SIZE = "page_size";
+    private static final String PAGE_NUMBER = "page_number";
+    private static final String SORT_ORDER = "sort_order";
 
     private final RestTemplate restTemplate;
     private final EventfulEventProperties properties;
@@ -53,51 +66,51 @@ public class EventfulRestService {
 
         StringBuilder urlString = new StringBuilder();
         urlString.append(properties.getBaseUrl())
-                .append(properties.getAppKeyParam())
+                .append(APP_KEY)
                 .append(EQUALS)
                 .append(properties.getApplicationKey());
-        request.getCategory()
-                .ifPresent(category ->
-                        urlString.append(SEPARATOR)
-                                .append(properties.getCategoryParam())
-                                .append(EQUALS)
-                                .append(eliminateWhiteSpace(category))
-                );
-        request.getDate()
-                .ifPresent(date ->
-                        urlString.append(SEPARATOR)
-                                .append(properties.getDateParam())
-                                .append(EQUALS)
-                                .append(eliminateWhiteSpace(date))
-                );
-        request.getLocation()
-                .ifPresent(location ->
-                        urlString.append(SEPARATOR)
-                                .append(properties.getLocationParam())
-                                .append(EQUALS)
-                                .append(eliminateWhiteSpace(location))
-                );
-        request.getKeywords()
-                .ifPresent(keywords ->
-                        urlString.append(SEPARATOR)
-                                .append(properties.getKeywordsParam())
-                                .append(EQUALS)
-                                .append(eliminateWhiteSpace(keywords))
-                );
-        request.getSortBy()
-                .ifPresent(sortBy ->
-                        urlString.append(SEPARATOR)
-                                .append(properties.getSortOrderParam())
-                                .append(EQUALS)
-                                .append(sortBy)
-                );
-        request.getPageSize()
-                .ifPresent(pageSize ->
-                        urlString.append(SEPARATOR)
-                                .append(properties.getPageSizeParam())
-                                .append(EQUALS)
-                                .append(pageSize)
-                );
+        if(!Objects.isNull(request.getCategory())) {
+            urlString.append(SEPARATOR)
+                    .append(CATEGORY)
+                    .append(EQUALS)
+                    .append(eliminateWhiteSpace(request.getCategory()));
+        }
+        if(!Objects.isNull(request.getDate())) {
+            urlString.append(SEPARATOR)
+                    .append(DATE)
+                    .append(EQUALS)
+                    .append(eliminateWhiteSpace(request.getDate()));
+        }
+        if(!Objects.isNull(request.getLocation())) {
+            urlString.append(SEPARATOR)
+                    .append(LOCATION)
+                    .append(EQUALS)
+                    .append(eliminateWhiteSpace(request.getLocation()));
+        }
+        if(!Objects.isNull(request.getKeywords())) {
+            urlString.append(SEPARATOR)
+                    .append(KEYWORDS)
+                    .append(EQUALS)
+                    .append(eliminateWhiteSpace(request.getKeywords()));
+        }
+        if(!Objects.isNull(request.getSortBy())) {
+            urlString.append(SEPARATOR)
+                    .append(SORT_ORDER)
+                    .append(EQUALS)
+                    .append(request.getSortBy());
+        }
+        if(!Objects.isNull(request.getPageSize())) {
+            urlString.append(SEPARATOR)
+                    .append(PAGE_SIZE)
+                    .append(EQUALS)
+                    .append(request.getPageSize());
+        }
+        if(!Objects.isNull(request.getPageNumber())) {
+            urlString.append(SEPARATOR)
+                    .append(PAGE_NUMBER)
+                    .append(EQUALS)
+                    .append(request.getPageNumber());
+        }
         return urlString.toString();
     }
 
