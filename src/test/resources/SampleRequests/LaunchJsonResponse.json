@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "response": {
+    "shouldEndSession": false,
+    "outputSpeech": {
+      "type": "PlainText",
+      "text": "Welcome to what's the scene. You can ask me something specific, or just say, What's going on, for an interactive walkthrough. "
+    },
+    "reprompt": {
+      "outputSpeech": {
+        "type": "PlainText",
+        "text": "I didn't get a response. You can ask me something specific, or just say, What's going on in town, for an interactive walkthrough. "
+      }
+    }
+  },
+  "sessionAttributes": {}
+}

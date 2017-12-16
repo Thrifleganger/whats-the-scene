@@ -1,0 +1,187 @@
+{
+  "version": "1.0",
+  "response": {
+    "shouldEndSession": false,
+    "outputSpeech": {
+      "type": "SSML",
+      "ssml": " <speak> 20 results found. Reading out the first 5 results. <p><s> 1. </s> <s> Eimear Quinn, at Pavilion Theatre, on <say-as interpret-as=\"date\">2017-12-16</say-as> at <say-as interpret-as=\"time\">00:00</say-as>, in Dublin </s></p><p><s> 2. </s> <s> Disney Xmas Classics : Aladdin, at Sugarclub, on <say-as interpret-as=\"date\">2017-12-16</say-as> at <say-as interpret-as=\"time\">14:30</say-as>, in Dublin </s></p><p><s> 3. </s> <s> Swing into Christmas, at RED COW MORAN HOTEL, on <say-as interpret-as=\"date\">2017-12-16</say-as> at <say-as interpret-as=\"time\">19:00</say-as>, in Dublin </s></p><p><s> 4. </s> <s> 80s Christmas Party with DELOREAN Band, at RED COW MORAN HOTEL, on <say-as interpret-as=\"date\">2017-12-16</say-as> at <say-as interpret-as=\"time\">19:00</say-as>, in Dublin </s></p><p><s> 5. </s> <s> UK Foo Flighters 10th Anniversary Tour, at The Academy, on <say-as interpret-as=\"date\">2017-12-16</say-as> at <say-as interpret-as=\"time\">19:00</say-as>, in Dublin </s></p>Would you like me to fetch more results? Or, just recite the number of the entry that you heard for a more detailed description.  </speak> "
+    },
+    "card": {
+      "type": "Simple",
+      "title": "20 results found. ",
+      "content": "1) Title: Eimear Quinn\nVenue: Pavilion Theatre\nDate: 2017-12-16 00:00:00\nCity: Dublin\n\n 2) Title: Disney Xmas Classics : Aladdin\nVenue: Sugarclub\nDate: 2017-12-16 14:30:00\nCity: Dublin\n\n 3) Title: Swing into Christmas\nVenue: RED COW MORAN HOTEL\nDate: 2017-12-16 19:00:00\nCity: Dublin\n\n 4) Title: 80s Christmas Party with DELOREAN Band\nVenue: RED COW MORAN HOTEL\nDate: 2017-12-16 19:00:00\nCity: Dublin\n\n 5) Title: UK Foo Flighters 10th Anniversary Tour\nVenue: The Academy\nDate: 2017-12-16 19:00:00\nCity: Dublin\n\n "
+    },
+    "reprompt": {
+      "outputSpeech": {
+        "type": "PlainText",
+        "text": "I didn't get a response. Would you like me to fetch more results? Or, just recite the number of the entry that you heard for a more detailed description. "
+      }
+    }
+  },
+  "sessionAttributes": {
+    "currentPageSize": 5,
+    "eventfulResponse": {
+      "total_items": 20,
+      "page_size": 5,
+      "page_count": 4,
+      "page_number": 1,
+      "search_time": 0.861,
+      "events": {
+        "event": [
+          {
+            "id": "E0-001-108106793-2",
+            "url": "http://dublin.eventful.com/events/eimear-quinn-/E0-001-108106793-2?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+            "title": "Eimear Quinn",
+            "start_time": "2017-12-16 00:00:00",
+            "venue_id": "V0-001-011978302-2",
+            "venue_url": "http://dublin.eventful.com/venues/pavilion-theatre-/V0-001-011978302-2?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+            "venue_name": "Pavilion Theatre",
+            "venue_display": 1,
+            "venue_address": "Marine Rd, Dún Laoghaire, Dun Laoghaire, Co. Dublin",
+            "city_name": "Dublin",
+            "region_name": "Dublin",
+            "region_abbr": "D",
+            "country_name": "Ireland",
+            "country_abbr2": "IE",
+            "olson_path": "Europe/Dublin",
+            "all_day": 2,
+            "latitude": 53.3416,
+            "longitude": -6.25735,
+            "geocode_type": "City Based GeoCodes",
+            "created": "2017-10-28 01:52:43",
+            "modified": "2017-10-28 01:52:43",
+            "owner": "evdb"
+          },
+          {
+            "id": "E0-001-109407541-8",
+            "url": "http://dublin.eventful.com/events/disney-xmas-classics-aladdin-/E0-001-109407541-8?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+            "title": "Disney Xmas Classics : Aladdin",
+            "description": " <p> A highly entertaining entry in Disney&#39;s renaissance era,&quot; Aladdin is beautifully drawn, with near-classic songs and a cast of scene-stealing characters.<p>  <p> Robin Williams&#39;s dizzying and hilarious voicing of the Genie is the main attraction of Aladdin, the third in the series of modern Disney animated movies that began with 1989&#39;s The Little Mermaid and heralded a new age for the genre. After a sultan (Douglas Seale) gives his daughter, Jasmine (Linda Larkin), three days to find a husband, she escapes the palace and encounters the street-savvy urchin Aladdin (Scott Weinger), who charms his way into her heart. While the sultan&#39;s Vizier, Jafar (Jonathan Freeman), weaves a spell so that he may marry Jasmine and become sultan himself, Aladdin discovers the Genie&#39;s lamp in a cave, rubs it, and sets the mystical entity free, leading the Genie to pledge his undying loyalty to the dazzled youth. Aladdin begins his quest to defeat Jafar and win the hand of the princess, with the Genie&#39;s help. Monsters, Disney&#39;s trademark talking animals, and a flying carpet all figure into the ensuing adventures, but Williams&#39; Genie, who can change into anything or anybody, steals the show as he launches into one crazed monologue after another, impersonating figures from Ed Sullivan to Elvis Presley.<p> Our December prices are<p> €10 per adult + booking fee<br> €7.50 per child under 16 + booking fee<p> Family of 4 ( 2 Adult 2 children or 1 Adult 3 children ) €30 + booking fee<p> All our Disney Xmas Series will have table service<p> Our cinema matine menue will consist of<p><br> artisan pizzas made to order<br> juices, soft drinks, gourmet popcorn, confectionary on sale<p> group bookings, special requests and any Diseny related queries pls email info@thesugarclub.com<p> or call the venue on 01 678 7188<p> + we will be serving alcohol for parents and guardians if requested.</p></p></p></p></p></p></p></p></p></p></p></p>",
+            "start_time": "2017-12-16 14:30:00",
+            "venue_id": "V0-001-000425623-5",
+            "venue_url": "http://dublin.eventful.com/venues/sugarclub-/V0-001-000425623-5?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+            "venue_name": "Sugarclub",
+            "venue_display": 1,
+            "venue_address": "8 Lower Leeson St",
+            "city_name": "Dublin",
+            "region_name": "Dublin",
+            "region_abbr": "D",
+            "postal_code": "2",
+            "country_name": "Ireland",
+            "country_abbr2": "IE",
+            "olson_path": "Europe/Dublin",
+            "all_day": 0,
+            "latitude": 53.3357,
+            "longitude": -6.2568007,
+            "geocode_type": "EVDB Geocoder",
+            "created": "2017-12-02 22:59:27",
+            "modified": "2017-12-03 17:10:28",
+            "owner": "evdb"
+          },
+          {
+            "id": "E0-001-106513600-1",
+            "url": "http://dublin.eventful.com/events/swing-into-christmas-/E0-001-106513600-1?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+            "title": "Swing into Christmas",
+            "description": " Swing into Christmas This festive season, prepare to Swing into Christmas with Frankly Buble and Tom O’Mahony at the NEWLY TRANSFORMED Red Cow Moran Hotel. Get ready to enjoy a fun-filled and glitzy night crammed full of amazing hits from the legends of The Rat Pack and Swing era including Sinatra, Dean Martin, Bobby Darin, Ella Fitzgerald and the greatest performers of this time.  One of the most exciting shows of its kind ever to visit the NEWLY TRANSFORMED Red Cow Moran Hotel this Christmas season. For three nights only DEC 8th, 15th and 16th, book your tickets for this amazing event and get ready to Swing into Christmas! Doors open at 7pm. For more details, contact the booking office directly at Tel: 01 4593650 Email: redcowcabaret@moranhotels.com To view more Christmas Parties at the Red Cow Moran Hotel, please click here. ",
+            "start_time": "2017-12-16 19:00:00",
+            "venue_id": "V0-001-001428964-9",
+            "venue_url": "http://dublin.eventful.com/venues/red-cow-moran-hotel-/V0-001-001428964-9?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+            "venue_name": "RED COW MORAN HOTEL",
+            "venue_display": 1,
+            "venue_address": "Red Cow Complex Naas Road Dublin 22 Republic of Ireland",
+            "city_name": "Dublin",
+            "region_name": "Dublin",
+            "region_abbr": "D",
+            "country_name": "Ireland",
+            "country_abbr2": "IE",
+            "olson_path": "Europe/Dublin",
+            "all_day": 0,
+            "latitude": 53.31914,
+            "longitude": -6.3633914,
+            "geocode_type": "EVDB Geocoder",
+            "created": "2017-09-07 03:57:56",
+            "modified": "2017-09-07 17:03:19",
+            "owner": "evdb"
+          },
+          {
+            "id": "E0-001-108731663-6",
+            "url": "http://dublin.eventful.com/events/80s-christmas-party-delorean-band-/E0-001-108731663-6?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+            "title": "80s Christmas Party with DELOREAN Band",
+            "description": " We’re heading back to the 80’s for a fun and energetic Christmas Party at the Red Cow Moran Hotel! Grab you shoulder pads, dig out those groovy neon tights and get your jellies on for an entertaining night at the Red Cow Moran Hotel as we are turning the clock back to the 80’s with live music from the spectacular 80s band Delorean for one night only Dec 16th with the amazing compare - Robbie Kane. Doors open at 7pm. Delorean doesn&#39;t just play 80s music ... Delorean is 80s MUSIC! Far more than a tribute act, Delorean is a band determined to return music to its greatest ever decade. All songs are performed as they should be – LIVE! making Delorean one of Europe&#39;s top 80s acts. The show is performed with full costume and to make your Christmas party at the Red Cow Moran Hotel extra special – a night to remember. For more details, contact the booking office directly at Tel: 01 4593650 or Email: redcowcabaret@moranhotels.com To view more Christmas Parties at the Red Cow Moran Hotel, please click here. ",
+            "start_time": "2017-12-16 19:00:00",
+            "venue_id": "V0-001-001428964-9",
+            "venue_url": "http://dublin.eventful.com/venues/red-cow-moran-hotel-/V0-001-001428964-9?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+            "venue_name": "RED COW MORAN HOTEL",
+            "venue_display": 1,
+            "venue_address": "Red Cow Complex Naas Road Dublin 22 Republic of Ireland",
+            "city_name": "Dublin",
+            "region_name": "Dublin",
+            "region_abbr": "D",
+            "country_name": "Ireland",
+            "country_abbr2": "IE",
+            "olson_path": "Europe/Dublin",
+            "all_day": 0,
+            "latitude": 53.31914,
+            "longitude": -6.3633914,
+            "geocode_type": "EVDB Geocoder",
+            "created": "2017-11-16 03:36:34",
+            "modified": "2017-11-29 09:27:08",
+            "owner": "evdb"
+          },
+          {
+            "id": "E0-001-108017085-9",
+            "url": "http://dublin.eventful.com/events/uk-foo-flighters-10th-anniversary-tour-/E0-001-108017085-9?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+            "title": "UK Foo Flighters 10th Anniversary Tour",
+            "description": " This gig is at the Academy Green Room in Dublin. Doors open 7:00pm on Sat 16 Dec 2017 The Academy is one of Dublin’s busiest concert venues. With its three rooms within the same building (Main Room, Academy 2and The Green Room), The Academy is hosting a show almost every night. Located in Dublin City centre, just a few minutes walk from O’Connell street, The Academy is easily accessible, whether you’re going by bus, Luas, DART, bike or by foot. When Jay formed this tribute act in 2006 he never dreamed he would be paying homage to what would become one of rock’s legendary bands. Jay and the rest of his UK Foo Fighters (Arron, Alex & Jamie) have performed at numerous festivals, corporate events, weddings, private parties and even ‘Garage Tour’ stops (just like the Foos) across the UK and Europe, sharing bills with acts such as Feeder and BBC Radio One DJ Zane Lowe. At every turn Jay has not only questioned the point/purpose of his tribute band but particularly, his own ability to emulate a front man with as much charisma and energy on stage as Dave Grohl. What truly drives his passion today is the music and performing live. That coupled with the overwhelming feedback he receives following every performance. See more info at ukfoofighterstribute.co.uk UK Foo Fighters Tribute tour dates listed on Ents24.com since Jun 2007. These tickets are strictly for over 18&#39;s. ",
+            "start_time": "2017-12-16 19:00:00",
+            "venue_id": "V0-001-004817650-8",
+            "venue_url": "http://dublin.eventful.com/venues/the-academy-/V0-001-004817650-8?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+            "venue_name": "The Academy",
+            "venue_display": 1,
+            "venue_address": "57 Middle Abbey Street",
+            "city_name": "Dublin",
+            "region_name": "Dublin",
+            "region_abbr": "D",
+            "country_name": "Ireland",
+            "country_abbr2": "IE",
+            "olson_path": "Europe/Dublin",
+            "all_day": 0,
+            "latitude": 53.347954,
+            "longitude": -6.261985,
+            "geocode_type": "EVDB Geocoder",
+            "created": "2017-10-25 12:35:19",
+            "modified": "2017-10-25 12:35:19",
+            "owner": "evdb"
+          }
+        ]
+      }
+    },
+    "currentPageNumber": 1,
+    "maxPageSize": 5,
+    "pathState": "AWAITING_MORE_RESULT_OR_MORE_DETAILS",
+    "eventfulRequest": {
+      "location": {
+        "present": true
+      },
+      "date": {
+        "present": true
+      },
+      "keywords": {
+        "present": false
+      },
+      "category": {
+        "present": true
+      },
+      "sortBy": {
+        "present": true
+      },
+      "pageSize": {
+        "present": true
+      },
+      "pageNumber": {
+        "present": true
+      }
+    },
+    "totalNumberOfResuts": 20
+  }
+}

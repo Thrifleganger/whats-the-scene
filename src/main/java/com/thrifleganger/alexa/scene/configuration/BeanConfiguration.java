@@ -3,7 +3,9 @@ package com.thrifleganger.alexa.scene.configuration;
 import com.amazon.speech.speechlet.Speechlet;
 import com.amazon.speech.speechlet.SpeechletV2;
 import com.amazon.speech.speechlet.servlet.SpeechletServlet;
+import com.thrifleganger.alexa.scene.handler.DialogModelHandler;
 import com.thrifleganger.alexa.scene.handler.EventfulHandler;
+import com.thrifleganger.alexa.scene.handler.GenericRequestHandler;
 import com.thrifleganger.alexa.scene.service.EventfulRestService;
 import com.thrifleganger.alexa.scene.speechlet.SceneSpeechlet;
 import com.thrifleganger.alexa.scene.utils.EventfulHandlerUtils;
@@ -45,29 +47,45 @@ public class BeanConfiguration {
 
     @Bean
     public EventfulEventProperties eventfulPropertiesBuilder() {
-        /*Resource resource =  new ClassPathResource("/application.yml");
-        Properties properties = PropertiesLoaderUtils.loadProperties(resource);*/
         return EventfulEventProperties.builder()
-                .appKeyParam("app_key")
-                .applicationKey("PVGpX9Rmnhx6nbsq")
-                .baseUrl("http://api.eventful.com/json/events/search?")
-                .categoryParam("category")
-                .dateParam("date")
-                .keywordsParam("keywords")
-                .locationParam("location")
-                .pageSizeParam("page_size")
-                .sortOrderParam("sort_order")
+                .applicationKey(System.getenv("EVENTFUL_APPKEY"))
+                .baseUrl(System.getenv("EVENTFUL_BASE_URL"))
                 .build();
     }
 
     @Bean
     public EventfulHandler getEventfulHandler() {
         return new EventfulHandler(
-                new EventfulRestService(
-                        restTemplate(),
-                        eventfulPropertiesBuilder(),
-                        httpHeaders()),
-                new EventfulHandlerUtils()
+                genericRequestHandler(),
+                dialogModelHandler(),
+                eventfulHandlerUtils()
+        );
+    }
+
+    @Bean
+    public DialogModelHandler dialogModelHandler() {
+        return new DialogModelHandler();
+    }
+
+    @Bean
+    public GenericRequestHandler genericRequestHandler() {
+        return new GenericRequestHandler(
+                eventfulRestService(),
+                eventfulHandlerUtils()
+        );
+    }
+
+    @Bean
+    public EventfulHandlerUtils eventfulHandlerUtils() {
+        return new EventfulHandlerUtils();
+    }
+
+    @Bean
+    public EventfulRestService eventfulRestService() {
+        return new EventfulRestService(
+                restTemplate(),
+                eventfulPropertiesBuilder(),
+                httpHeaders()
         );
     }
 

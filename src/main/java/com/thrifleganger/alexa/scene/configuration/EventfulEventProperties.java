@@ -13,11 +13,4 @@ public class EventfulEventProperties {
 
     private String baseUrl;
     private String applicationKey;
-    private String appKeyParam;
-    private String keywordsParam;
-    private String locationParam;
-    private String dateParam;
-    private String categoryParam;
-    private String pageSizeParam;
-    private String sortOrderParam;
 }

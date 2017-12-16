@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "response": {
+    "shouldEndSession": true,
+    "outputSpeech": {
+      "type": "PlainText",
+      "text": "Thank you for using What's the scene. Sponsored by Wheatabix protein. Don't think, just eat. "
+    }
+  }
+}

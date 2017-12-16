@@ -1,0 +1,34 @@
+{
+  "version": "1.0",
+  "response": {
+    "shouldEndSession": false,
+    "directives": [
+      {
+        "type": "Dialog.Delegate",
+        "updatedIntent": {
+          "name": "SceneInvocationIntent",
+          "confirmationStatus": "NONE",
+          "slots": {
+            "date": {
+              "name": "date",
+              "confirmationStatus": "NONE"
+            },
+            "location": {
+              "name": "location",
+              "confirmationStatus": "NONE"
+            },
+            "keywords": {
+              "name": "keywords",
+              "confirmationStatus": "NONE"
+            },
+            "category": {
+              "name": "category",
+              "confirmationStatus": "NONE"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "sessionAttributes": {}
+}

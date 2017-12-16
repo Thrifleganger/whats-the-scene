@@ -1,71 +1,43 @@
 package com.thrifleganger.alexa.scene.utils;
 
-import com.amazon.speech.slu.ConfirmationStatus;
-import com.amazon.speech.speechlet.SpeechletResponse;
-import com.amazon.speech.speechlet.dialog.directives.DelegateDirective;
-import com.amazon.speech.speechlet.dialog.directives.DialogIntent;
-import com.amazon.speech.speechlet.dialog.directives.ElicitSlotDirective;
-import com.thrifleganger.alexa.scene.model.eventful.enumeration.Category;
-import com.thrifleganger.alexa.scene.model.eventful.enumeration.Slot;
-import org.apache.commons.lang3.StringUtils;
+import com.amazon.speech.json.SpeechletRequestEnvelope;
+import com.amazon.speech.speechlet.IntentRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.thrifleganger.alexa.scene.constants.SessionAttributes;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.stream.Collectors;
-
 @Component
+@Slf4j
 public class EventfulHandlerUtils {
 
-    public SpeechletResponse elicitResponseToReinitializeCategorySlot(final DialogIntent updatedIntent) {
-        ElicitSlotDirective elicitSlotDirective = new ElicitSlotDirective();
-        elicitSlotDirective.setSlotToElicit(Slot.CATEGORY.getValue());
-        elicitSlotDirective.setUpdatedIntent(updatedIntent);
-        SpeechletResponse response = new SpeechletResponse();
-        response.setNullableShouldEndSession(false);
-        response.setDirectives(Collections.singletonList(elicitSlotDirective));
-        response.setOutputSpeech(AlexaHelper.speech(String.format(Conversation.CATEGORY_INVALID_RETRY, fetchAllCategoryDescription())));
-        return response;
+    public Integer generateNextPageNumber(final  SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
+        if(isNull(requestEnvelope.getSession().getAttribute(SessionAttributes.CURRENT_PAGE_NUMBER.getValue()))) {
+            return 1;
+        } else {
+            return (Integer) requestEnvelope.getSession().getAttribute(SessionAttributes.CURRENT_PAGE_NUMBER.getValue()) + 1;
+        }
     }
 
-    public SpeechletResponse elicitResponseToRestartDialog(final DialogIntent updatedIntent) {
-        updatedIntent.setConfirmationStatus(ConfirmationStatus.NONE);
-        clearSlotValuesForRetry(updatedIntent);
-        ElicitSlotDirective elicitSlotDirective = new ElicitSlotDirective();
-        elicitSlotDirective.setSlotToElicit(Slot.CATEGORY.getValue());
-        elicitSlotDirective.setUpdatedIntent(updatedIntent);
-        SpeechletResponse response = new SpeechletResponse();
-        response.setNullableShouldEndSession(false);
-        response.setDirectives(Collections.singletonList(elicitSlotDirective));
-        response.setOutputSpeech(AlexaHelper.speech(Conversation.SCENE_DIALOG_RESTART));
-        return response;
+    public String checkForNull(final Object object, final String defaultValue) {
+        if(object == null) return defaultValue;
+        return object.toString();
     }
 
-    public SpeechletResponse delegateResponseToContinueDialog(final DialogIntent updatedIntent) {
-        DelegateDirective delegateDirective = new DelegateDirective();
-        delegateDirective.setUpdatedIntent(updatedIntent);
-
-        SpeechletResponse response = new SpeechletResponse();
-        response.setDirectives(Collections.singletonList(delegateDirective));
-        response.setNullableShouldEndSession(false);
-        return response;
+    public boolean isNull(final Object object) {
+        return object == null;
     }
 
-    private void clearSlotValuesForRetry(final DialogIntent intent) {
-        intent.getSlots().forEach(
-                (s, dialogSlot) -> {
-                    dialogSlot.setValue(null);
-                    dialogSlot.setConfirmationStatus(ConfirmationStatus.NONE);
-                }
-        );
-    }
-
-    private String fetchAllCategoryDescription() {
-        return StringUtils.join(
-                Arrays.stream(Category.values())
-                        .map(category -> category.getDescription())
-                        .collect(Collectors.toList()),
-                ", "
-        );
+    public String prettyPrint(final Object object){
+        try {
+            return new ObjectMapper()
+                    .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+                    .writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(object);
+        } catch (JsonProcessingException ex) {
+            return ex.getMessage();
+        }
     }
 }
