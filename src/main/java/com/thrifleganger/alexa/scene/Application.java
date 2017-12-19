@@ -14,7 +14,5 @@ public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        log.info(System.getenv("EVENTFUL_APPKEY"));
-        log.info(System.getenv("EVENTFUL_BASE_URL"));
     }
 }

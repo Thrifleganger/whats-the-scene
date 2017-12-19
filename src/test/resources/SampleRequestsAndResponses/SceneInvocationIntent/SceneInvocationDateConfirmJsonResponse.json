@@ -1,0 +1,33 @@
+{
+  "shouldEndSession": false,
+  "directives": [
+    {
+      "type": "Dialog.Delegate",
+      "updatedIntent": {
+        "name": "SceneInvocationIntent",
+        "confirmationStatus": "NONE",
+        "slots": {
+          "date": {
+            "name": "date",
+            "value": "2017-12-16",
+            "confirmationStatus": "NONE"
+          },
+          "location": {
+            "name": "location",
+            "value": "Dublin",
+            "confirmationStatus": "NONE"
+          },
+          "keywords": {
+            "name": "keywords",
+            "confirmationStatus": "NONE"
+          },
+          "category": {
+            "name": "category",
+            "value": "music",
+            "confirmationStatus": "CONFIRMED"
+          }
+        }
+      }
+    }
+  ]
+}

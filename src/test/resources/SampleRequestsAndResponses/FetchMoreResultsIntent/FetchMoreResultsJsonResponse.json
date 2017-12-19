@@ -1,0 +1,18 @@
+{
+  "shouldEndSession": false,
+  "outputSpeech": {
+    "type": "SSML",
+    "ssml": " <speak> Reading out the next 5 results. <p><s> 1. </s> <s> June Rodgers Christmas Show 2017, at RED COW MORAN HOTEL, on <say-as interpret-as=\"date\">2017-12-23</say-as>, at <say-as interpret-as=\"time\">19:00</say-as>, in Dublin </s></p><p><s> 2. </s> <s> Smash Hits! - 90s Christmas Show at the Red Cow Inn, at RED COW MORAN HOTEL, on <say-as interpret-as=\"date\">2017-12-23</say-as>, at <say-as interpret-as=\"time\">19:00</say-as>, in Dublin </s></p><p><s> 3. </s> <s> Springbreak - SOLD OUT, at Button Factory, on <say-as interpret-as=\"date\">2017-12-23</say-as>, at <say-as interpret-as=\"time\">19:30</say-as>, in Dublin </s></p><p><s> 4. </s> <s> Damien Dempsey, at Vicar Street, on <say-as interpret-as=\"date\">2017-12-23</say-as>, at <say-as interpret-as=\"time\">20:00</say-as>, in Dublin </s></p><p><s> 5. </s> <s> Sunil Sharpe - 6 Hour Set at District 8 //, at District 8, on <say-as interpret-as=\"date\">2017-12-23</say-as>, at <say-as interpret-as=\"time\">21:00</say-as>, in Dublin </s></p>Would you like me to fetch more results? Or, just recite the number of the entry that you heard for a more detailed description.  </speak> "
+  },
+  "card": {
+    "type": "Simple",
+    "title": "13 results found - Page 2 ",
+    "content": "1) Title: June Rodgers Christmas Show 2017\nVenue: RED COW MORAN HOTEL\nDate: 2017-12-23 19:00:00\nCity: Dublin\n\n 2) Title: Smash Hits! - 90s Christmas Show at the Red Cow Inn\nVenue: RED COW MORAN HOTEL\nDate: 2017-12-23 19:00:00\nCity: Dublin\n\n 3) Title: Springbreak - SOLD OUT\nVenue: Button Factory\nDate: 2017-12-23 19:30:00\nCity: Dublin\n\n 4) Title: Damien Dempsey\nVenue: Vicar Street\nDate: 2017-12-23 20:00:00\nCity: Dublin\n\n 5) Title: Sunil Sharpe - 6 Hour Set at District 8 //\nVenue: District 8\nDate: 2017-12-23 21:00:00\nCity: Dublin\n\n "
+  },
+  "reprompt": {
+    "outputSpeech": {
+      "type": "PlainText",
+      "text": "I didn't get a response. Would you like me to fetch more results? Or, just recite the number of the entry that you heard for a more detailed description. "
+    }
+  }
+}

@@ -65,7 +65,7 @@ public class DialogModelHandler {
     private String fetchAllCategoryDescription() {
         return StringUtils.join(
                 Arrays.stream(Category.values())
-                        .map(category -> category.getDescription())
+                        .map(Category::getDescription)
                         .collect(Collectors.toList()),
                 ", "
         );

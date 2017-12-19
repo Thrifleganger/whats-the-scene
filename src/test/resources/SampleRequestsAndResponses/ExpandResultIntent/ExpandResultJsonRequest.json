@@ -1,0 +1,182 @@
+{
+  "version": "1.0",
+  "session": {
+    "new": false,
+    "sessionId": "amzn1.echo-api.session.e9d30d1e-6379-450e-9fd9-98a557a41835",
+    "application": {
+      "applicationId": "amzn1.ask.skill.11fbb08b-fe35-4995-b585-7b888737ac5a"
+    },
+    "attributes": {
+      "currentPageSize": 5,
+      "eventfulResponse": {
+        "total_items": 13,
+        "page_size": 5,
+        "page_count": 3,
+        "page_number": 2,
+        "search_time": 0.319,
+        "events": {
+          "event": [
+            {
+              "id": "E0-001-103277252-2@2017122319",
+              "url": "http://dublin.eventful.com/events/june-rodgers-christmas-sh-/E0-001-103277252-2@2017122319?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+              "title": "June Rodgers Christmas Show 2017",
+              "description": " June Rodgers is delighted to return to the NEWLY TRANSFORMED Red Cow Moran Hotel for Christmas 2017! Long established as one of Irelands top comic performers, June has regularly appeared on TV, in a full range of stage productions from musical theatre to pantomime. As a cabaret artist June has starred in her own show for a number of highly successful seasons at The Red Cow Moran Hotel and is delighted to be making a welcome return this Christmas to the NEWLY TRANSFORMED Red Cow Moran Hotel for 12 dates, starting Nov 30th. Door open at 7pm. For more details, contact the booking office directly at Tel: 01 4593650 Email: redcowcabaret@moranhotels.com To view more Christmas Parties at the Red Cow Moran Hotel, please click here. ",
+              "start_time": "2017-12-23 19:00:00",
+              "venue_id": "V0-001-001428964-9",
+              "venue_url": "http://dublin.eventful.com/venues/red-cow-moran-hotel-/V0-001-001428964-9?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+              "venue_name": "RED COW MORAN HOTEL",
+              "venue_display": 1,
+              "venue_address": "Red Cow Complex Naas Road Dublin 22 Republic of Ireland",
+              "city_name": "Dublin",
+              "region_name": "Dublin",
+              "region_abbr": "D",
+              "country_name": "Ireland",
+              "country_abbr2": "IE",
+              "olson_path": "Europe/Dublin",
+              "all_day": 0,
+              "latitude": 53.31914,
+              "longitude": -6.3633914,
+              "geocode_type": "EVDB Geocoder",
+              "created": "2017-05-25 19:57:48",
+              "modified": "2017-05-26 17:16:06",
+              "owner": "evdb"
+            },
+            {
+              "id": "E0-001-104285011-1",
+              "url": "http://dublin.eventful.com/events/smash-hits-90s-christmas-show-red-cow-inn-/E0-001-104285011-1?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+              "title": "Smash Hits! - 90s Christmas Show at the Red Cow Inn",
+              "description": " Smash Hits! - 90s Christmas Show at the Red Cow Inn Sat 23rd Dec 2017 | Doors Open: 7.30pm | Last Meals: 8.30pm | Show Starts: 9.30pm | DJ till 2am Party the night away to music from acclaimed artists such as Vanilla Ice, MC Hammer, House of Pain, Take That, Spice Girls, Haddaway, Prodigy and Snap, amongst others. Smash Hits! are a unique, entertaining tribute to the golden era of early 90s dance, pop and RnB and will perform in the Red Cow Inn for one night only, December 23rd. For more details, contact the booking office directly at Tel: 01 4593650 Email: redcowcabarets@moranhotels.com To view more Christmas Parties at the Red Cow Inn, please click here. ",
+              "start_time": "2017-12-23 19:00:00",
+              "venue_id": "V0-001-001428964-9",
+              "venue_url": "http://dublin.eventful.com/venues/red-cow-moran-hotel-/V0-001-001428964-9?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+              "venue_name": "RED COW MORAN HOTEL",
+              "venue_display": 1,
+              "venue_address": "Red Cow Complex Naas Road Dublin 22 Republic of Ireland",
+              "city_name": "Dublin",
+              "region_name": "Dublin",
+              "region_abbr": "D",
+              "country_name": "Ireland",
+              "country_abbr2": "IE",
+              "olson_path": "Europe/Dublin",
+              "all_day": 0,
+              "latitude": 53.31914,
+              "longitude": -6.3633914,
+              "geocode_type": "EVDB Geocoder",
+              "created": "2017-07-01 05:48:51",
+              "modified": "2017-07-01 17:04:27",
+              "owner": "evdb"
+            },
+            {
+              "id": "E0-001-109883452-7",
+              "url": "http://dublin.eventful.com/events/springbreak-sold-out-/E0-001-109883452-7?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+              "title": "Springbreak - SOLD OUT",
+              "start_time": "2017-12-23 19:30:00",
+              "venue_id": "V0-001-000667957-3",
+              "venue_url": "http://dublin.eventful.com/venues/button-factory-/V0-001-000667957-3?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+              "venue_name": "Button Factory",
+              "venue_display": 1,
+              "venue_address": "Curved Street, Temple Bar",
+              "city_name": "Dublin",
+              "region_name": "Dublin",
+              "region_abbr": "D",
+              "postal_code": "2",
+              "country_name": "Ireland",
+              "country_abbr2": "IE",
+              "olson_path": "Europe/Dublin",
+              "all_day": 0,
+              "latitude": 53.34489,
+              "longitude": -6.264538,
+              "geocode_type": "EVDB Geocoder",
+              "created": "2017-12-18 12:08:21",
+              "modified": "2017-12-18 12:08:21",
+              "owner": "evdb"
+            },
+            {
+              "id": "E0-001-105825460-0",
+              "url": "http://dublin.eventful.com/events/damien-dempsey-/E0-001-105825460-0?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+              "title": "Damien Dempsey",
+              "start_time": "2017-12-23 20:00:00",
+              "venue_id": "V0-001-000152848-7",
+              "venue_url": "http://dublin.eventful.com/venues/vicar-street-/V0-001-000152848-7?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+              "venue_name": "Vicar Street",
+              "venue_display": 1,
+              "venue_address": "58 Thomas Street",
+              "city_name": "Dublin",
+              "region_name": "Dublin",
+              "region_abbr": "D",
+              "postal_code": "2",
+              "country_name": "Ireland",
+              "country_abbr2": "IE",
+              "olson_path": "Europe/Dublin",
+              "all_day": 0,
+              "latitude": 53.342667,
+              "longitude": -6.2776713,
+              "geocode_type": "EVDB Geocoder",
+              "created": "2017-08-18 00:38:32",
+              "modified": "2017-08-18 00:38:32",
+              "owner": "evdb"
+            },
+            {
+              "id": "E0-001-108017503-0",
+              "url": "http://dublin.eventful.com/events/sunil-sharpe-6-hour-set-district-8-/E0-001-108017503-0?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+              "title": "Sunil Sharpe - 6 Hour Set at District 8 //",
+              "description": " Subject at District 8 // Sunil Sharpe - 6 Hour Set You don't see this often in Irish clubs - if ever - but onDec 23rdSubject presents a 6 hour headline show from the one and only Sunil Sharpe. Anyone who was lucky enough to catch his sold out 5 hour set at D8 last year, knows what they're in for. This cannot be missed! ",
+              "start_time": "2017-12-23 21:00:00",
+              "venue_id": "V0-001-008391340-5",
+              "venue_url": "http://dublin.eventful.com/venues/district-8-/V0-001-008391340-5?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+              "venue_name": "District 8",
+              "venue_display": 1,
+              "venue_address": "135-138 Francis Street, Dublin 8",
+              "city_name": "Dublin",
+              "region_name": "Dublin",
+              "region_abbr": "D",
+              "country_name": "Ireland",
+              "country_abbr2": "IE",
+              "olson_path": "Europe/Dublin",
+              "all_day": 0,
+              "latitude": 53.3416,
+              "longitude": -6.25735,
+              "geocode_type": "City Based GeoCodes",
+              "created": "2017-10-25 12:45:51",
+              "modified": "2017-12-11 16:32:09",
+              "owner": "evdb"
+            }
+          ]
+        }
+      },
+      "currentPageNumber": 2,
+      "maxPageSize": 5,
+      "pathState": "AWAITING_MORE_RESULTS_OR_MORE_DETAILS",
+      "eventfulRequest": {
+        "location": "Dublin",
+        "date": "2017-12-23",
+        "category": "music",
+        "sortBy": "DATE",
+        "pageSize": 5,
+        "pageNumber": 2
+      },
+      "totalNumberOfResuts": 13
+    },
+    "user": {
+      "userId": "amzn1.ask.account.AEJL652AXZZOTUHSHLIGK4XQ5ROXA5PA3YENV37YAKTDT4K75LEX6MRZEZ3J3FCOAQD4IRPAGIXUIG27PHD62WFKJRHKY6PLHDGEO5IMNXNGDDHLDWEYVQ3HH63TQLMQGJBKD47O6AM7UG2LTJIZQ2XFW7MZZR7MWMUS3OFSAZUSIUI5QMEQZETTGW7S4XEPSVKPFEBYNF6KCFY"
+    }
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "amzn1.echo-api.request.ec1a73df-ee47-436a-8868-3b537e286cd4",
+    "timestamp": "2017-12-18T23:03:26Z",
+    "locale": "en-GB",
+    "intent": {
+      "name": "ExpandResultsIntent",
+      "confirmationStatus": "NONE",
+      "slots": {
+        "number": {
+          "name": "number",
+          "value": "1",
+          "confirmationStatus": "NONE"
+        }
+      }
+    },
+    "dialogState": "COMPLETED"
+  }
+}

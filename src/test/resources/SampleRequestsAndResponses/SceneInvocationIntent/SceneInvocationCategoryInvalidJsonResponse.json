@@ -1,0 +1,38 @@
+{
+  "shouldEndSession": false,
+  "outputSpeech": {
+    "type": "PlainText",
+    "text": "I couldn't find that category. Here's a list of categories to choose from. Music and Concerts, Film and Movies, Comedy and skits, Learning and Education, Kids and Family, Food and Wine, Festivals, Art galleries and exhibits, Literary and books, Clubs and meetups, Politics and activism, Conferences and Tradeshows, Science, Technology. Which category are you looking for? "
+  },
+  "directives": [
+    {
+      "type": "Dialog.ElicitSlot",
+      "updatedIntent": {
+        "name": "SceneInvocationIntent",
+        "confirmationStatus": "NONE",
+        "slots": {
+          "date": {
+            "name": "date",
+            "value": "2017-12-23",
+            "confirmationStatus": "NONE"
+          },
+          "location": {
+            "name": "location",
+            "value": "Dublin",
+            "confirmationStatus": "NONE"
+          },
+          "keywords": {
+            "name": "keywords",
+            "confirmationStatus": "NONE"
+          },
+          "category": {
+            "name": "category",
+            "value": "irrelevent",
+            "confirmationStatus": "NONE"
+          }
+        }
+      },
+      "slotToElicit": "category"
+    }
+  ]
+}

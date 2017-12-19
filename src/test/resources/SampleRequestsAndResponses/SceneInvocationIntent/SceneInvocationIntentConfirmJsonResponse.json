@@ -1,0 +1,18 @@
+{
+  "shouldEndSession": false,
+  "outputSpeech": {
+    "type": "SSML",
+    "ssml": " <speak> 13 results found. Reading out the first 4 results. <p><s> 1. </s> <s> sorta ultra - when we met - new not normals, at The Lombard Pub and Townhouse, on <say-as interpret-as=\"date\">2017-12-23</say-as>, at <say-as interpret-as=\"time\">00:00</say-as>, in Dublin </s></p><p><s> 2. </s> <s> Swimmers Jackson / The May Alter / Ivan Nicolas / James J Clarke, at Dublin, on <say-as interpret-as=\"date\">2017-12-23</say-as>, at <say-as interpret-as=\"time\">00:00</say-as>, in Dublin </s></p><p><s> 3. </s> <s> FONTAINES D.C and Guests, at Dublin, on <say-as interpret-as=\"date\">2017-12-23</say-as>, at <say-as interpret-as=\"time\">00:00</say-as>, in Dublin </s></p><p><s> 4. </s> <s> Vladimir Miler, at Berlin D2, on <say-as interpret-as=\"date\">2017-12-23</say-as>, at <say-as interpret-as=\"time\">00:00</say-as>, in Dublin </s></p>Would you like me to fetch more results? Or, just recite the number of the entry that you heard for a more detailed description.  </speak> "
+  },
+  "card": {
+    "type": "Simple",
+    "title": "13 results found - Page 1 ",
+    "content": "1) Title: sorta ultra - when we met - new not normals\nVenue: The Lombard Pub & Townhouse\nDate: 2017-12-23 00:00:00\nCity: Dublin\n\n 2) Title: Swimmers Jackson / The May Alter / Ivan Nicolas / James J Clarke\nVenue: Dublin\nDate: 2017-12-23 00:00:00\nCity: Dublin\n\n 3) Title: FONTAINES D.C & Guests\nVenue: Dublin\nDate: 2017-12-23 00:00:00\nCity: Dublin\n\n 4) Title: Vladimir Miler\nVenue: Berlin D2\nDate: 2017-12-23 00:00:00\nCity: Dublin\n\n "
+  },
+  "reprompt": {
+    "outputSpeech": {
+      "type": "PlainText",
+      "text": "I didn't get a response. Would you like me to fetch more results? Or, just recite the number of the entry that you heard for a more detailed description. "
+    }
+  }
+}

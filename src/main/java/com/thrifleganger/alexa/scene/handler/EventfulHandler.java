@@ -8,13 +8,13 @@ import com.amazon.speech.speechlet.dialog.directives.DialogIntent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thrifleganger.alexa.scene.constants.PathState;
 import com.thrifleganger.alexa.scene.constants.SessionAttributes;
+import com.thrifleganger.alexa.scene.model.eventful.EventDataModel;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulRequest;
+import com.thrifleganger.alexa.scene.model.eventful.EventfulResponse;
 import com.thrifleganger.alexa.scene.model.eventful.enumeration.Category;
 import com.thrifleganger.alexa.scene.model.eventful.enumeration.Slot;
 import com.thrifleganger.alexa.scene.model.eventful.enumeration.Sort;
-import com.thrifleganger.alexa.scene.utils.AlexaHelper;
-import com.thrifleganger.alexa.scene.utils.Conversation;
-import com.thrifleganger.alexa.scene.utils.EventfulHandlerUtils;
+import com.thrifleganger.alexa.scene.utils.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class EventfulHandler {
     private final EventfulHandlerUtils utils;
 
     public SpeechletResponse handleSceneInvocationIntent(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
-        log.info(utils.prettyPrint(requestEnvelope));
+        //log.info(utils.prettyPrint(requestEnvelope));
         IntentRequest request = requestEnvelope.getRequest();
         if(request.getDialogState().equals(IntentRequest.DialogState.COMPLETED)) {
             return genericRequestHandler.handle(
@@ -70,31 +70,61 @@ public class EventfulHandler {
 
     public SpeechletResponse handleFetchMoreResults(final SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
 
-        if(getCurrentPathState(requestEnvelope).equals(PathState.AWAITING_MORE_RESULT_OR_MORE_DETAILS)) {
-            log.info(utils.prettyPrint(requestEnvelope.getSession().getAttribute(SessionAttributes.EVENTFUL_REQUEST.getValue())));
+        if(utils.getCurrentPathState(requestEnvelope).equals(PathState.AWAITING_MORE_RESULTS_OR_MORE_DETAILS)) {
+            log.info(utils.prettyPrint(utils.getSessionAttribute(requestEnvelope, SessionAttributes.EVENTFUL_REQUEST).orElse(null)));
             final EventfulRequest request = new ObjectMapper().convertValue(
-                    requestEnvelope.getSession().getAttribute(SessionAttributes.EVENTFUL_REQUEST.getValue()),
+                    utils.getSessionAttribute(requestEnvelope, SessionAttributes.EVENTFUL_REQUEST).orElse(EventfulRequest.builder().build()),
                     EventfulRequest.class);
             request.setPageNumber(utils.generateNextPageNumber(requestEnvelope));
             return  genericRequestHandler.handle(requestEnvelope, request);
         }
-        return SpeechletResponse.newTellResponse(AlexaHelper.speech("There are no more results. "));
+        return SpeechletResponse.newTellResponse(AlexaHelper.speech(Conversation.NO_MORE_RESULTS));
     }
 
     public SpeechletResponse handleExpandResults(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
-
-        final PathState pathState = getCurrentPathState(requestEnvelope);
-        if(pathState.equals(PathState.AWAITING_MORE_RESULT_OR_MORE_DETAILS)
-                ||
-            pathState.equals(PathState.AWAITING_MORE_DETAILS)
-        ) {
-            Integer number = Integer.valueOf(requestEnvelope.getRequest().getIntent().getSlot(Slot.NUMBER.getValue()).getValue());
-            return SpeechletResponse.newTellResponse(AlexaHelper.speech("Sending data of number " + number + "to the app"));
+        final IntentRequest request = requestEnvelope.getRequest();
+        final PathState pathState = utils.getCurrentPathState(requestEnvelope);
+        if(request.getDialogState().equals(IntentRequest.DialogState.COMPLETED)) {
+            if (pathState.equals(PathState.AWAITING_MORE_RESULTS_OR_MORE_DETAILS)
+                    ||
+                pathState.equals(PathState.AWAITING_MORE_DETAILS)
+            ) {
+                try {
+                    Integer number = Integer.valueOf(AlexaHelper.getSlotValue(request.getIntent(), Slot.NUMBER.getValue()).orElse("0"));
+                    if(number > 0 && number <= 5) {
+                        final EventfulResponse eventfulResponse = new ObjectMapper().convertValue(
+                                utils.getSessionAttribute(requestEnvelope, SessionAttributes.EVENTFUL_RESPONSE)
+                                        .orElse(EventfulResponse.builder().build()),
+                                EventfulResponse.class
+                        );
+                        final EventDataModel eventDataModel = eventfulResponse.getEvents().getEvent().get(number - 1);
+                        return SpeechletResponse.newTellResponse(AlexaHelper.ssmlSpeech(
+                                String.format(
+                                        Ssml.EXPAND_RESULT,
+                                        utils.validateSsml(utils.checkForNull(eventDataModel.getTitle(), Conversation.UNKNOWN_EVENT)),
+                                        utils.validateSsml(utils.checkForNull(eventDataModel.getDescription(), Conversation.UNKNOWN_DESCRIPTION)),
+                                        utils.validateSsml(utils.checkForNull(eventDataModel.getVenueName(), Conversation.UNKNOWN_VENUE)),
+                                        utils.checkForNull(DateUtil.getFormattedDate(eventDataModel.getStartTime()), Conversation.UNKNOWN_DATE),
+                                        utils.checkForNull(DateUtil.getFormattedTime(eventDataModel.getStartTime()), Conversation.UNKNOWN_TIME),
+                                        utils.validateSsml(utils.checkForNull(eventDataModel.getCityName(), Conversation.UNKNOWN_LOCATION))
+                                )
+                        ));
+                    }
+                    return SpeechletResponse.newAskResponse(
+                            AlexaHelper.speech("The number you said was not in range, could you try again? "),
+                            AlexaHelper.reprompt("The number you said was not in range, could you try again? "));
+                } catch (NumberFormatException ignore) {
+                    return SpeechletResponse.newAskResponse(
+                            AlexaHelper.speech("The number you said was not valid, could you try again? "),
+                            AlexaHelper.reprompt("The number you said was not valid, could you try again? "));
+                }
+            }
+            if (pathState.equals(PathState.AWAITING_MORE_DETAILS_FOR_SINGLE_RESULT)) {
+                return SpeechletResponse.newTellResponse(AlexaHelper.speech("Expanding result. "));
+            }
+            return SpeechletResponse.newTellResponse(AlexaHelper.speech("This is not a valid response here. "));
         }
-        if(pathState.equals(PathState.AWAITING_MORE_DETAILS_FOR_SINGLE_RESULT)) {
-            return SpeechletResponse.newTellResponse(AlexaHelper.speech("Expanding result. "));
-        }
-        return SpeechletResponse.newTellResponse(AlexaHelper.speech("This is not a valid response here. "));
+        return dialogModelHandler.delegateResponseToContinueDialog(new DialogIntent(request.getIntent()));
     }
 
     public SpeechletResponse handleStopEvent(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
@@ -183,11 +213,4 @@ public class EventfulHandler {
                 .filter(slotEntry -> slot.getValue().equals(slotEntry.getKey()))
                 .anyMatch(slotEntry -> slotEntry.getValue().getValue() == null);
     }
-
-
-    private PathState getCurrentPathState(final SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
-        return PathState.valueOf((String) requestEnvelope.getSession().getAttribute(SessionAttributes.PATH_STATE.getValue()));
-    }
-
-
 }

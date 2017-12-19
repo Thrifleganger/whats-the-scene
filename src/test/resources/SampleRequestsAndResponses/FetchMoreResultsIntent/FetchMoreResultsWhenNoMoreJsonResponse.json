@@ -1,0 +1,7 @@
+{
+  "shouldEndSession": true,
+  "outputSpeech": {
+    "type": "PlainText",
+    "text": "There are no more results. "
+  }
+}

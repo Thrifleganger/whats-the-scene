@@ -1,0 +1,13 @@
+{
+  "shouldEndSession": false,
+  "outputSpeech": {
+    "type": "PlainText",
+    "text": "The number you said was not in range, could you try again? "
+  },
+  "reprompt": {
+    "outputSpeech": {
+      "type": "PlainText",
+      "text": "The number you said was not in range, could you try again? "
+    }
+  }
+}

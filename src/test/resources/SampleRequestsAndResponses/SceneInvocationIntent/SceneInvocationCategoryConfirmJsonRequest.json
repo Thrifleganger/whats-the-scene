@@ -1,0 +1,43 @@
+{
+  "version": "1.0",
+  "session": {
+    "new": false,
+    "sessionId": "amzn1.echo-api.session.7d3c7f93-8a94-4658-a4bc-0fdcaa841960",
+    "application": {
+      "applicationId": "amzn1.ask.skill.11fbb08b-fe35-4995-b585-7b888737ac5a"
+    },
+    "user": {
+      "userId": "amzn1.ask.account.AEJL652AXZZOTUHSHLIGK4XQ5ROXA5PA3YENV37YAKTDT4K75LEX6MRZEZ3J3FCOAQD4IRPAGIXUIG27PHD62WFKJRHKY6PLHDGEO5IMNXNGDDHLDWEYVQ3HH63TQLMQGJBKD47O6AM7UG2LTJIZQ2XFW7MZZR7MWMUS3OFSAZUSIUI5QMEQZETTGW7S4XEPSVKPFEBYNF6KCFY"
+    }
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "amzn1.echo-api.request.94c9d11e-6e78-49ab-b504-9342f7e8deab",
+    "timestamp": "2017-12-15T07:08:12Z",
+    "locale": "en-GB",
+    "intent": {
+      "name": "SceneInvocationIntent",
+      "confirmationStatus": "NONE",
+      "slots": {
+        "date": {
+          "name": "date",
+          "confirmationStatus": "NONE"
+        },
+        "location": {
+          "name": "location",
+          "confirmationStatus": "NONE"
+        },
+        "keywords": {
+          "name": "keywords",
+          "confirmationStatus": "NONE"
+        },
+        "category": {
+          "name": "category",
+          "value": "music",
+          "confirmationStatus": "NONE"
+        }
+      }
+    },
+    "dialogState": "IN_PROGRESS"
+  }
+}
