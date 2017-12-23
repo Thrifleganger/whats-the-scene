@@ -53,16 +53,9 @@ public class EventfulRestService {
                     String.class
             );
             log.info("Sending request to Eventful: " + generateRestEndpointUrl(request));
-            final String nonHtml = Jsoup.parse(Jsoup.clean(
-                    response.getBody()
-                            .replaceAll("<br>", ". ")
-                            .replaceAll("</br>", ". "),
-                    Whitelist.basic())).text();
-            final String normalizedResponseBody = Normalizer.normalize(nonHtml, Normalizer.Form.NFD)
-                    .replaceAll("[^\\p{ASCII}]", "");
             return RestResult.success(
                     new ObjectMapper().readValue(
-                            normalizedResponseBody,
+                            cleanUpResponseBody(response.getBody()),
                             EventfulResponse.class
                     )
             );
@@ -126,5 +119,19 @@ public class EventfulRestService {
 
     private String eliminateWhiteSpace(final String string) {
         return string.replaceAll(" ", "+");
+    }
+
+    private String cleanUpResponseBody(final String response) {
+        final String nonHtml = Jsoup.parse(Jsoup.clean(
+                response
+                    .replaceAll("<br>", ". ")
+                    .replaceAll("</br>", ". ")
+                    .replaceAll("&quot;", "")
+                    .replaceAll("&amp;", "and")
+                    .replaceAll("&lt;", "")
+                    .replaceAll("&gt", ""),
+                Whitelist.basic())).text();
+        return Normalizer.normalize(nonHtml, Normalizer.Form.NFD)
+                .replaceAll("[^\\p{ASCII}]", "");
     }
 }

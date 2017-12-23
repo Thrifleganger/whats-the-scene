@@ -115,7 +115,7 @@ public class GenericRequestHandler {
                 AlexaHelper.ssmlSpeech(conversationBuilder.toString()),
                 AlexaHelper.reprompt(repromptBuilder.toString()),
                 AlexaHelper.simpleCard(
-                        cardTitleBuilder.toString(),/**/
+                        cardTitleBuilder.toString(),
                         cardContentBuilder.toString()
                 )
         );

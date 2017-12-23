@@ -2,6 +2,7 @@ package com.thrifleganger.alexa.scene.constants;
 
 public enum PathState {
 
+    SKILL_INVOKED,
     SCENE_INVOCATION_STARTED,
     SCENE_INVOCATION_COMPLETE,
     AWAITING_MORE_RESULTS_OR_MORE_DETAILS,

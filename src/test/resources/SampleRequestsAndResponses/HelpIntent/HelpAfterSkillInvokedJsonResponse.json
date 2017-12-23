@@ -1,0 +1,13 @@
+{
+  "shouldEndSession": false,
+  "outputSpeech": {
+    "type": "PlainText",
+    "text": "From here, you can take two approaches. The conversational approach is the most accurate to begin with, where you can ask me, What's going on today? Or, what's happening in dublin tomorrow? I will try to ask you all the relevant information to get the most relevant result back to you. The one shot approach is where you can skip all the hassle and get your results fast. Just ask me something like, When is Taylor swift playing in California? or Find gigs for Lord Huron. At any point, if you wish to come back to the main menu, just say Start over. "
+  },
+  "reprompt": {
+    "outputSpeech": {
+      "type": "PlainText",
+      "text": "From here, you can take two approaches. The conversational approach is the most accurate to begin with, where you can ask me, What's going on today? Or, what's happening in dublin tomorrow? I will try to ask you all the relevant information to get the most relevant result back to you. The one shot approach is where you can skip all the hassle and get your results fast. Just ask me something like, When is Taylor swift playing in California? or Find gigs for Lord Huron. At any point, if you wish to come back to the main menu, just say Start over. "
+    }
+  }
+}

@@ -5,6 +5,7 @@ import com.amazon.speech.speechlet.servlet.SpeechletServlet;
 import com.thrifleganger.alexa.scene.handler.DialogModelHandler;
 import com.thrifleganger.alexa.scene.handler.EventfulHandler;
 import com.thrifleganger.alexa.scene.handler.GenericRequestHandler;
+import com.thrifleganger.alexa.scene.handler.GenericResultExpanderHandler;
 import com.thrifleganger.alexa.scene.service.EventfulRestService;
 import com.thrifleganger.alexa.scene.speechlet.SceneSpeechlet;
 import com.thrifleganger.alexa.scene.utils.EventfulHandlerUtils;
@@ -45,6 +46,7 @@ public class BeanConfiguration {
     public EventfulHandler getEventfulHandler() {
         return new EventfulHandler(
                 genericRequestHandler(),
+                genericResultExpanderHandler(),
                 dialogModelHandler(),
                 eventfulHandlerUtils()
         );
@@ -61,6 +63,11 @@ public class BeanConfiguration {
                 eventfulRestService(),
                 eventfulHandlerUtils()
         );
+    }
+
+    @Bean
+    public GenericResultExpanderHandler genericResultExpanderHandler() {
+        return new GenericResultExpanderHandler(eventfulHandlerUtils());
     }
 
     @Bean

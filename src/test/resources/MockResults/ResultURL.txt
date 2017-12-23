@@ -1,1 +1,20 @@
 http://api.eventful.com/json/events/search?app_key=PVGpX9Rmnhx6nbsq&category=music&date=2017-12-23&location=Dublin&sort_order=DATE&page_size=5&page_number=1
+
+Tests to work on:
+Help intent - done
+Cancel intent - done
+Unrecognized intent
+Gig search intent
+No results found
+Problem hitting endpoint
+
+fix &quot; and other special characters - done
+default future for gig search - done
+implement custom number slot - done
+change keyword slot type for scene invocation - done
+Help response - done
+Single result expand handler - done
+Generic expand model - pull out code - done
+
+
+

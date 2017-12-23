@@ -12,6 +12,7 @@ import com.thrifleganger.alexa.scene.model.eventful.EventDataModel;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulRequest;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulResponse;
 import com.thrifleganger.alexa.scene.model.eventful.enumeration.Category;
+import com.thrifleganger.alexa.scene.model.eventful.enumeration.Number;
 import com.thrifleganger.alexa.scene.model.eventful.enumeration.Slot;
 import com.thrifleganger.alexa.scene.model.eventful.enumeration.Sort;
 import com.thrifleganger.alexa.scene.utils.*;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 public class EventfulHandler {
 
     private final GenericRequestHandler genericRequestHandler;
+    private final GenericResultExpanderHandler genericResultExpanderHandler;
     private final DialogModelHandler dialogModelHandler;
     private final EventfulHandlerUtils utils;
 
@@ -51,6 +53,11 @@ public class EventfulHandler {
                 setTypeSafeCategoryAndConfirmStatus(updatedIntent);
             } else {
                 return dialogModelHandler.elicitResponseToReinitializeCategorySlot(updatedIntent);
+            }
+        }
+        if(!isSlotValueNull(updatedIntent, Slot.DATE) && !isSlotStatusConfirmed(updatedIntent, Slot.DATE)) {
+            if(isDateValid(parseDateValueFromIntentResponse(updatedIntent))) {
+                //setDateAndConfirmStatus(updatedIntent);
             }
         }
         return dialogModelHandler.delegateResponseToContinueDialog(updatedIntent);
@@ -83,46 +90,9 @@ public class EventfulHandler {
 
     public SpeechletResponse handleExpandResults(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
         final IntentRequest request = requestEnvelope.getRequest();
-        final PathState pathState = utils.getCurrentPathState(requestEnvelope);
+
         if(request.getDialogState().equals(IntentRequest.DialogState.COMPLETED)) {
-            if (pathState.equals(PathState.AWAITING_MORE_RESULTS_OR_MORE_DETAILS)
-                    ||
-                pathState.equals(PathState.AWAITING_MORE_DETAILS)
-            ) {
-                try {
-                    Integer number = Integer.valueOf(AlexaHelper.getSlotValue(request.getIntent(), Slot.NUMBER.getValue()).orElse("0"));
-                    if(number > 0 && number <= 5) {
-                        final EventfulResponse eventfulResponse = new ObjectMapper().convertValue(
-                                utils.getSessionAttribute(requestEnvelope, SessionAttributes.EVENTFUL_RESPONSE)
-                                        .orElse(EventfulResponse.builder().build()),
-                                EventfulResponse.class
-                        );
-                        final EventDataModel eventDataModel = eventfulResponse.getEvents().getEvent().get(number - 1);
-                        return SpeechletResponse.newTellResponse(AlexaHelper.ssmlSpeech(
-                                String.format(
-                                        Ssml.EXPAND_RESULT,
-                                        utils.validateSsml(utils.checkForNull(eventDataModel.getTitle(), Conversation.UNKNOWN_EVENT)),
-                                        utils.validateSsml(utils.checkForNull(eventDataModel.getDescription(), Conversation.UNKNOWN_DESCRIPTION)),
-                                        utils.validateSsml(utils.checkForNull(eventDataModel.getVenueName(), Conversation.UNKNOWN_VENUE)),
-                                        utils.checkForNull(DateUtil.getFormattedDate(eventDataModel.getStartTime()), Conversation.UNKNOWN_DATE),
-                                        utils.checkForNull(DateUtil.getFormattedTime(eventDataModel.getStartTime()), Conversation.UNKNOWN_TIME),
-                                        utils.validateSsml(utils.checkForNull(eventDataModel.getCityName(), Conversation.UNKNOWN_LOCATION))
-                                )
-                        ));
-                    }
-                    return SpeechletResponse.newAskResponse(
-                            AlexaHelper.speech("The number you said was not in range, could you try again? "),
-                            AlexaHelper.reprompt("The number you said was not in range, could you try again? "));
-                } catch (NumberFormatException ignore) {
-                    return SpeechletResponse.newAskResponse(
-                            AlexaHelper.speech("The number you said was not valid, could you try again? "),
-                            AlexaHelper.reprompt("The number you said was not valid, could you try again? "));
-                }
-            }
-            if (pathState.equals(PathState.AWAITING_MORE_DETAILS_FOR_SINGLE_RESULT)) {
-                return SpeechletResponse.newTellResponse(AlexaHelper.speech("Expanding result. "));
-            }
-            return SpeechletResponse.newTellResponse(AlexaHelper.speech("This is not a valid response here. "));
+            return genericResultExpanderHandler.handle(requestEnvelope);
         }
         return dialogModelHandler.delegateResponseToContinueDialog(new DialogIntent(request.getIntent()));
     }
@@ -134,7 +104,31 @@ public class EventfulHandler {
     }
 
     public SpeechletResponse handleHelpEvent(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
-        return SpeechletResponse.newTellResponse(AlexaHelper.speech("Come on! You know what to do"));
+        final PathState pathState = utils.getCurrentPathState(requestEnvelope);
+        switch (pathState) {
+            case SKILL_INVOKED:
+                return SpeechletResponse.newAskResponse(
+                        AlexaHelper.speech(Conversation.HELP_SKILL_INVOKED),
+                        AlexaHelper.reprompt(Conversation.HELP_SKILL_INVOKED)
+                );
+            case AWAITING_MORE_RESULTS_OR_MORE_DETAILS:
+                return SpeechletResponse.newAskResponse(
+                        AlexaHelper.speech(Conversation.HELP_MORE_DETAILS + Conversation.HELP_MORE_RESULTS),
+                        AlexaHelper.reprompt(Conversation.HELP_MORE_DETAILS + Conversation.HELP_MORE_RESULTS)
+                );
+            case AWAITING_MORE_DETAILS:
+            case AWAITING_MORE_DETAILS_FOR_SINGLE_RESULT:
+                return SpeechletResponse.newAskResponse(
+                        AlexaHelper.speech(Conversation.HELP_MORE_DETAILS),
+                        AlexaHelper.reprompt(Conversation.HELP_MORE_DETAILS)
+                );
+            case UNDETERMINED:
+            default:
+                return SpeechletResponse.newAskResponse(
+                        AlexaHelper.speech(Conversation.HELP_SKILL_INVOKED),
+                        AlexaHelper.reprompt(Conversation.HELP_SKILL_INVOKED)
+                );
+        }
     }
 
     public SpeechletResponse handleCancelEvent(SpeechletRequestEnvelope<IntentRequest> speechletRequestEnvelope) {
@@ -159,7 +153,8 @@ public class EventfulHandler {
                 keywords.filter(string -> !string.contains("anything")).orElse(null)
         );
         eventfulRequest.setLocation(intentRequest.getIntent().getSlot(Slot.LOCATION.getValue()).getValue());
-        eventfulRequest.setDate(intentRequest.getIntent().getSlot(Slot.DATE.getValue()).getValue());
+        final Optional<String> date = Optional.ofNullable(intentRequest.getIntent().getSlot(Slot.DATE.getValue()).getValue());
+        eventfulRequest.setDate(date.orElse("future"));
         eventfulRequest.setCategory(intentRequest.getIntent().getSlot(Slot.CATEGORY.getValue()).getValue());
         eventfulRequest.setSortBy(Sort.DATE);
         eventfulRequest.setPageSize(5);
@@ -212,5 +207,18 @@ public class EventfulHandler {
                 .stream()
                 .filter(slotEntry -> slot.getValue().equals(slotEntry.getKey()))
                 .anyMatch(slotEntry -> slotEntry.getValue().getValue() == null);
+    }
+
+    private boolean isDateValid(final String date) {
+        return false;
+    }
+
+    private String parseDateValueFromIntentResponse(final DialogIntent dialogIntent) {
+        return dialogIntent.getSlots().entrySet()
+                .stream()
+                .filter(slotEntry -> Slot.DATE.getValue().equals(slotEntry.getKey()))
+                .map(slotEntry -> slotEntry.getValue().getValue())
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
     }
 }

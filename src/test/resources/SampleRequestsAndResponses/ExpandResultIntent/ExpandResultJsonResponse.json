@@ -3,5 +3,10 @@
   "outputSpeech": {
     "type": "SSML",
     "ssml": "<speak><p><s> June Rodgers Christmas Show 2017 </s>  June Rodgers is delighted to return to the NEWLY TRANSFORMED Red Cow Moran Hotel for Christmas 2017! Long established as one of Irelands top comic performers, June has regularly appeared on TV, in a full range of stage productions from musical theatre to pantomime. As a cabaret artist June has starred in her own show for a number of highly successful seasons at The Red Cow Moran Hotel and is delighted to be making a welcome return this Christmas to the NEWLY TRANSFORMED Red Cow Moran Hotel for 12 dates, starting Nov 30th. Door open at 7pm. For more details, contact the booking office directly at Tel: 01 4593650 Email: redcowcabaret@moranhotels.com To view more Christmas Parties at the Red Cow Moran Hotel, please click here. . <s>This event is happening at RED COW MORAN HOTEL, on <say-as interpret-as=\"date\">2017-12-23</say-as> at <say-as interpret-as=\"time\">19:00</say-as>, in Dublin </s><s>For more information on this event, check your Alexa app </s></p></speak>"
+  },
+  "card": {
+    "type": "Simple",
+    "title": "June Rodgers Christmas Show 2017",
+    "content": "Description:  June Rodgers is delighted to return to the NEWLY TRANSFORMED Red Cow Moran Hotel for Christmas 2017! Long established as one of Irelands top comic performers, June has regularly appeared on TV, in a full range of stage productions from musical theatre to pantomime. As a cabaret artist June has starred in her own show for a number of highly successful seasons at The Red Cow Moran Hotel and is delighted to be making a welcome return this Christmas to the NEWLY TRANSFORMED Red Cow Moran Hotel for 12 dates, starting Nov 30th. Door open at 7pm. For more details, contact the booking office directly at Tel: 01 4593650 Email: redcowcabaret@moranhotels.com To view more Christmas Parties at the Red Cow Moran Hotel, please click here. \nVenue: RED COW MORAN HOTEL\nDate: 2017-12-23 19:00:00\nCity: Dublin\nURL: http://dublin.eventful.com/events/june-rodgers-christmas-sh-/E0-001-103277252-2@2017122319?utm_source=apis&utm_medium=apim&utm_campaign=apic\n "
   }
 }
