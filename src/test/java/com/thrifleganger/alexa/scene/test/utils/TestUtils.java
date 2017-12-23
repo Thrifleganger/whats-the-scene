@@ -21,6 +21,7 @@ public class TestUtils {
                                 ),
                                 beanConfiguration.eventfulHandlerUtils()
                         ),
+                        beanConfiguration.genericResultExpanderHandler(),
                         beanConfiguration.dialogModelHandler(),
                         beanConfiguration.eventfulHandlerUtils()
                 )

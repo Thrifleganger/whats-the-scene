@@ -1,0 +1,13 @@
+{
+  "shouldEndSession": false,
+  "outputSpeech": {
+    "type": "PlainText",
+    "text": "You can ask me to give you more details for a specific result that you heard by saying, Expand number three, or, Give me more details for the second result. You can also ask me to fetch the next page of results. Remember that all results are sorted by date. Just say, fetch more results, or, go to the next page. "
+  },
+  "reprompt": {
+    "outputSpeech": {
+      "type": "PlainText",
+      "text": "You can ask me to give you more details for a specific result that you heard by saying, Expand number three, or, Give me more details for the second result. You can also ask me to fetch the next page of results. Remember that all results are sorted by date. Just say, fetch more results, or, go to the next page. "
+    }
+  }
+}

@@ -2,12 +2,12 @@
   "shouldEndSession": false,
   "outputSpeech": {
     "type": "PlainText",
-    "text": "The number you said was not valid, could you try again? "
+    "text": "The number you mentioned was not valid, could you try again with a number between one and 4? "
   },
   "reprompt": {
     "outputSpeech": {
       "type": "PlainText",
-      "text": "The number you said was not valid, could you try again? "
+      "text": "The number you mentioned was not valid, could you try again with a number between one and 4? "
     }
   }
 }
