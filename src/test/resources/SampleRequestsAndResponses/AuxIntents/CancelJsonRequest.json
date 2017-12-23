@@ -1,0 +1,27 @@
+{
+  "version": "1.0",
+  "session": {
+    "new": false,
+    "sessionId": "amzn1.echo-api.session.306c5735-d9ae-4bda-9cc0-c4727b816105",
+    "application": {
+      "applicationId": "amzn1.ask.skill.11fbb08b-fe35-4995-b585-7b888737ac5a"
+    },
+    "attributes": {
+      "pathState": "SKILL_INVOKED"
+    },
+    "user": {
+      "userId": "amzn1.ask.account.AEJL652AXZZOTUHSHLIGK4XQ5ROXA5PA3YENV37YAKTDT4K75LEX6MRZEZ3J3FCOAQD4IRPAGIXUIG27PHD62WFKJRHKY6PLHDGEO5IMNXNGDDHLDWEYVQ3HH63TQLMQGJBKD47O6AM7UG2LTJIZQ2XFW7MZZR7MWMUS3OFSAZUSIUI5QMEQZETTGW7S4XEPSVKPFEBYNF6KCFY"
+    }
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "amzn1.echo-api.request.54c50278-501b-49d7-9505-b53ed94e1728",
+    "timestamp": "2017-12-23T10:30:23Z",
+    "locale": "en-GB",
+    "intent": {
+      "name": "AMAZON.CancelIntent",
+      "confirmationStatus": "NONE"
+    },
+    "dialogState": "STARTED"
+  }
+}

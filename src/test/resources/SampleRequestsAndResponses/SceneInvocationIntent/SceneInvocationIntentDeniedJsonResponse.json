@@ -1,0 +1,35 @@
+{
+  "shouldEndSession": false,
+  "outputSpeech": {
+    "type": "PlainText",
+    "text": "Let's try again. Which category of events are you looking for? "
+  },
+  "directives": [
+    {
+      "type": "Dialog.ElicitSlot",
+      "updatedIntent": {
+        "name": "SceneInvocationIntent",
+        "confirmationStatus": "NONE",
+        "slots": {
+          "date": {
+            "name": "date",
+            "confirmationStatus": "NONE"
+          },
+          "location": {
+            "name": "location",
+            "confirmationStatus": "NONE"
+          },
+          "keywords": {
+            "name": "keywords",
+            "confirmationStatus": "NONE"
+          },
+          "category": {
+            "name": "category",
+            "confirmationStatus": "NONE"
+          }
+        }
+      },
+      "slotToElicit": "category"
+    }
+  ]
+}

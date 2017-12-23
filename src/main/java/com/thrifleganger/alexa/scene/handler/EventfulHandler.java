@@ -8,13 +8,14 @@ import com.amazon.speech.speechlet.dialog.directives.DialogIntent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thrifleganger.alexa.scene.constants.PathState;
 import com.thrifleganger.alexa.scene.constants.SessionAttributes;
+import com.thrifleganger.alexa.scene.model.eventful.EventDataModel;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulRequest;
+import com.thrifleganger.alexa.scene.model.eventful.EventfulResponse;
 import com.thrifleganger.alexa.scene.model.eventful.enumeration.Category;
+import com.thrifleganger.alexa.scene.model.eventful.enumeration.Number;
 import com.thrifleganger.alexa.scene.model.eventful.enumeration.Slot;
 import com.thrifleganger.alexa.scene.model.eventful.enumeration.Sort;
-import com.thrifleganger.alexa.scene.utils.AlexaHelper;
-import com.thrifleganger.alexa.scene.utils.Conversation;
-import com.thrifleganger.alexa.scene.utils.EventfulHandlerUtils;
+import com.thrifleganger.alexa.scene.utils.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,12 @@ import java.util.stream.Collectors;
 public class EventfulHandler {
 
     private final GenericRequestHandler genericRequestHandler;
+    private final GenericResultExpanderHandler genericResultExpanderHandler;
     private final DialogModelHandler dialogModelHandler;
     private final EventfulHandlerUtils utils;
 
     public SpeechletResponse handleSceneInvocationIntent(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
-        log.info(utils.prettyPrint(requestEnvelope));
+        //log.info(utils.prettyPrint(requestEnvelope));
         IntentRequest request = requestEnvelope.getRequest();
         if(request.getDialogState().equals(IntentRequest.DialogState.COMPLETED)) {
             return genericRequestHandler.handle(
@@ -51,6 +53,11 @@ public class EventfulHandler {
                 setTypeSafeCategoryAndConfirmStatus(updatedIntent);
             } else {
                 return dialogModelHandler.elicitResponseToReinitializeCategorySlot(updatedIntent);
+            }
+        }
+        if(!isSlotValueNull(updatedIntent, Slot.DATE) && !isSlotStatusConfirmed(updatedIntent, Slot.DATE)) {
+            if(isDateValid(parseDateValueFromIntentResponse(updatedIntent))) {
+                //setDateAndConfirmStatus(updatedIntent);
             }
         }
         return dialogModelHandler.delegateResponseToContinueDialog(updatedIntent);
@@ -70,31 +77,24 @@ public class EventfulHandler {
 
     public SpeechletResponse handleFetchMoreResults(final SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
 
-        if(getCurrentPathState(requestEnvelope).equals(PathState.AWAITING_MORE_RESULT_OR_MORE_DETAILS)) {
-            log.info(utils.prettyPrint(requestEnvelope.getSession().getAttribute(SessionAttributes.EVENTFUL_REQUEST.getValue())));
+        if(utils.getCurrentPathState(requestEnvelope).equals(PathState.AWAITING_MORE_RESULTS_OR_MORE_DETAILS)) {
+            log.info(utils.prettyPrint(utils.getSessionAttribute(requestEnvelope, SessionAttributes.EVENTFUL_REQUEST).orElse(null)));
             final EventfulRequest request = new ObjectMapper().convertValue(
-                    requestEnvelope.getSession().getAttribute(SessionAttributes.EVENTFUL_REQUEST.getValue()),
+                    utils.getSessionAttribute(requestEnvelope, SessionAttributes.EVENTFUL_REQUEST).orElse(EventfulRequest.builder().build()),
                     EventfulRequest.class);
             request.setPageNumber(utils.generateNextPageNumber(requestEnvelope));
             return  genericRequestHandler.handle(requestEnvelope, request);
         }
-        return SpeechletResponse.newTellResponse(AlexaHelper.speech("There are no more results. "));
+        return SpeechletResponse.newTellResponse(AlexaHelper.speech(Conversation.NO_MORE_RESULTS));
     }
 
     public SpeechletResponse handleExpandResults(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
+        final IntentRequest request = requestEnvelope.getRequest();
 
-        final PathState pathState = getCurrentPathState(requestEnvelope);
-        if(pathState.equals(PathState.AWAITING_MORE_RESULT_OR_MORE_DETAILS)
-                ||
-            pathState.equals(PathState.AWAITING_MORE_DETAILS)
-        ) {
-            Integer number = Integer.valueOf(requestEnvelope.getRequest().getIntent().getSlot(Slot.NUMBER.getValue()).getValue());
-            return SpeechletResponse.newTellResponse(AlexaHelper.speech("Sending data of number " + number + "to the app"));
+        if(request.getDialogState().equals(IntentRequest.DialogState.COMPLETED)) {
+            return genericResultExpanderHandler.handle(requestEnvelope);
         }
-        if(pathState.equals(PathState.AWAITING_MORE_DETAILS_FOR_SINGLE_RESULT)) {
-            return SpeechletResponse.newTellResponse(AlexaHelper.speech("Expanding result. "));
-        }
-        return SpeechletResponse.newTellResponse(AlexaHelper.speech("This is not a valid response here. "));
+        return dialogModelHandler.delegateResponseToContinueDialog(new DialogIntent(request.getIntent()));
     }
 
     public SpeechletResponse handleStopEvent(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
@@ -104,7 +104,31 @@ public class EventfulHandler {
     }
 
     public SpeechletResponse handleHelpEvent(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
-        return SpeechletResponse.newTellResponse(AlexaHelper.speech("Come on! You know what to do"));
+        final PathState pathState = utils.getCurrentPathState(requestEnvelope);
+        switch (pathState) {
+            case SKILL_INVOKED:
+                return SpeechletResponse.newAskResponse(
+                        AlexaHelper.speech(Conversation.HELP_SKILL_INVOKED),
+                        AlexaHelper.reprompt(Conversation.HELP_SKILL_INVOKED)
+                );
+            case AWAITING_MORE_RESULTS_OR_MORE_DETAILS:
+                return SpeechletResponse.newAskResponse(
+                        AlexaHelper.speech(Conversation.HELP_MORE_DETAILS + Conversation.HELP_MORE_RESULTS),
+                        AlexaHelper.reprompt(Conversation.HELP_MORE_DETAILS + Conversation.HELP_MORE_RESULTS)
+                );
+            case AWAITING_MORE_DETAILS:
+            case AWAITING_MORE_DETAILS_FOR_SINGLE_RESULT:
+                return SpeechletResponse.newAskResponse(
+                        AlexaHelper.speech(Conversation.HELP_MORE_DETAILS),
+                        AlexaHelper.reprompt(Conversation.HELP_MORE_DETAILS)
+                );
+            case UNDETERMINED:
+            default:
+                return SpeechletResponse.newAskResponse(
+                        AlexaHelper.speech(Conversation.HELP_SKILL_INVOKED),
+                        AlexaHelper.reprompt(Conversation.HELP_SKILL_INVOKED)
+                );
+        }
     }
 
     public SpeechletResponse handleCancelEvent(SpeechletRequestEnvelope<IntentRequest> speechletRequestEnvelope) {
@@ -129,7 +153,8 @@ public class EventfulHandler {
                 keywords.filter(string -> !string.contains("anything")).orElse(null)
         );
         eventfulRequest.setLocation(intentRequest.getIntent().getSlot(Slot.LOCATION.getValue()).getValue());
-        eventfulRequest.setDate(intentRequest.getIntent().getSlot(Slot.DATE.getValue()).getValue());
+        final Optional<String> date = Optional.ofNullable(intentRequest.getIntent().getSlot(Slot.DATE.getValue()).getValue());
+        eventfulRequest.setDate(date.orElse("future"));
         eventfulRequest.setCategory(intentRequest.getIntent().getSlot(Slot.CATEGORY.getValue()).getValue());
         eventfulRequest.setSortBy(Sort.DATE);
         eventfulRequest.setPageSize(5);
@@ -184,10 +209,16 @@ public class EventfulHandler {
                 .anyMatch(slotEntry -> slotEntry.getValue().getValue() == null);
     }
 
-
-    private PathState getCurrentPathState(final SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
-        return PathState.valueOf((String) requestEnvelope.getSession().getAttribute(SessionAttributes.PATH_STATE.getValue()));
+    private boolean isDateValid(final String date) {
+        return false;
     }
 
-
+    private String parseDateValueFromIntentResponse(final DialogIntent dialogIntent) {
+        return dialogIntent.getSlots().entrySet()
+                .stream()
+                .filter(slotEntry -> Slot.DATE.getValue().equals(slotEntry.getKey()))
+                .map(slotEntry -> slotEntry.getValue().getValue())
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+    }
 }

@@ -1,0 +1,126 @@
+{
+  "version": "1.0",
+  "session": {
+    "new": false,
+    "sessionId": "amzn1.echo-api.session.8ff7737a-9b43-4286-a5ae-ea0ea01394f2",
+    "application": {
+      "applicationId": "amzn1.ask.skill.11fbb08b-fe35-4995-b585-7b888737ac5a"
+    },
+    "attributes": {
+      "currentPageSize": 3,
+      "eventfulResponse": {
+        "total_items": 13,
+        "page_size": 5,
+        "page_count": 3,
+        "page_number": 3,
+        "search_time": 0.912,
+        "events": {
+          "event": [
+            {
+              "id": "E0-001-109591699-0",
+              "url": "http://dublin.eventful.com/events/daft-punk-tribute-av-show-/E0-001-109591699-0?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+              "title": "Daft Punk Tribute - AV Show",
+              "description": " After 20 years, the world has finally caught up with Daft Punk, the illusive helmet-clad retro-futurists with who the world has become so familial. Their infectious dance music, up-beat rhythmic vibe, robotic counterparts and truly epic live shows has been the staple diet of some the biggest and most well-renowned festivals since the release of their revolutionary debut album Alive in 1997. As any of those few lucky ones, who managed to get their hands on a golden ticket to one of the most sought-after live shows in history will tell you, there wasnt one person who didnt go home from that show feeling a little bit better about the world.   *Disclaimer: The Daft Punk Tribute act are in no way attempting to impersonate the original Daft Punk act, they are merely a tribute to the original Daft Punk in all their greatest and therefore should only be considered as such. ",
+              "start_time": "2017-12-23 22:00:00",
+              "venue_id": "V0-001-000425623-5",
+              "venue_url": "http://dublin.eventful.com/venues/sugarclub-/V0-001-000425623-5?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+              "venue_name": "Sugarclub",
+              "venue_display": 1,
+              "venue_address": "8 Lower Leeson St",
+              "city_name": "Dublin",
+              "region_name": "Dublin",
+              "region_abbr": "D",
+              "postal_code": "2",
+              "country_name": "Ireland",
+              "country_abbr2": "IE",
+              "olson_path": "Europe/Dublin",
+              "all_day": 0,
+              "latitude": 53.3357,
+              "longitude": -6.2568007,
+              "geocode_type": "EVDB Geocoder",
+              "created": "2017-12-09 03:15:41",
+              "modified": "2017-12-09 03:15:41",
+              "owner": "evdb"
+            },
+            {
+              "id": "E0-001-109569400-7",
+              "url": "http://dublin.eventful.com/events/big-shaq-wright-venue-/E0-001-109569400-7?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+              "title": "Big Shaq at The Wright Venue",
+              "description": " The Wright Venue & Industry Entertainment present: BIG SHAQ THE WRIGHT VENUE, DUBLINSaturday, December 23rdDOORS: 10:30PM Tickets from 12. OVER 18s | ID ESSENTIAL | R.O.A.R**Tickets are non-refundable** ",
+              "start_time": "2017-12-23 22:00:00",
+              "venue_id": "V0-001-002485209-1",
+              "venue_url": "http://dublin.eventful.com/venues/the-wright-venue-/V0-001-002485209-1?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+              "venue_name": "The Wright Venue",
+              "venue_display": 1,
+              "venue_address": "South Quarter, Airside Retail Park, Swords",
+              "city_name": "Dublin",
+              "region_name": "Dublin",
+              "region_abbr": "D",
+              "country_name": "Ireland",
+              "country_abbr2": "IE",
+              "olson_path": "Europe/Dublin",
+              "all_day": 0,
+              "latitude": 53.445587,
+              "longitude": -6.2237935,
+              "geocode_type": "EVDB Geocoder",
+              "created": "2017-12-08 09:23:22",
+              "modified": "2017-12-08 09:23:22",
+              "owner": "evdb"
+            },
+            {
+              "id": "E0-001-109205589-0",
+              "url": "http://dublin.eventful.com/events/hule-reunion-button-factory-one-night-only-/E0-001-109205589-0?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+              "title": "Hu$$le Reunion @ The Button Factory for one night only",
+              "description": " Hu$$le Reunion December 23rd @ The Button Factory Dublin's biggest hip hop classics and 90's anthems party; back where it all began for one night only.Expect:90's hip hop classicsDance anthemsBalloon dropsOG photographers & visualsFull DJ crew for one night only ",
+              "start_time": "2017-12-23 23:00:00",
+              "venue_id": "V0-001-011873562-0",
+              "venue_url": "http://dublin.eventful.com/venues/button-factory-/V0-001-011873562-0?utm_source=apis&utm_medium=apim&utm_campaign=apic",
+              "venue_name": "BUTTON FACTORY",
+              "venue_display": 1,
+              "venue_address": "Curved Street",
+              "city_name": "Dublin",
+              "region_name": "Dublin",
+              "region_abbr": "D",
+              "country_name": "Ireland",
+              "country_abbr2": "IE",
+              "olson_path": "Europe/Dublin",
+              "all_day": 0,
+              "latitude": 53.3416,
+              "longitude": -6.25735,
+              "geocode_type": "City Based GeoCodes",
+              "created": "2017-11-30 07:31:06",
+              "modified": "2017-11-30 07:31:06",
+              "owner": "evdb"
+            }
+          ]
+        }
+      },
+      "currentPageNumber": 3,
+      "maxPageSize": 5,
+      "pathState": "AWAITING_MORE_DETAILS",
+      "eventfulRequest": {
+        "location": "Dublin",
+        "date": "2017-12-23",
+        "category": "music",
+        "sortBy": "DATE",
+        "pageSize": 5,
+        "pageNumber": 3
+      },
+      "totalNumberOfResuts": 13
+    },
+    "user": {
+      "userId": "amzn1.ask.account.AEJL652AXZZOTUHSHLIGK4XQ5ROXA5PA3YENV37YAKTDT4K75LEX6MRZEZ3J3FCOAQD4IRPAGIXUIG27PHD62WFKJRHKY6PLHDGEO5IMNXNGDDHLDWEYVQ3HH63TQLMQGJBKD47O6AM7UG2LTJIZQ2XFW7MZZR7MWMUS3OFSAZUSIUI5QMEQZETTGW7S4XEPSVKPFEBYNF6KCFY"
+    }
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "amzn1.echo-api.request.c1a9582e-b5fc-413d-a928-df69bb323afd",
+    "timestamp": "2017-12-18T22:44:30Z",
+    "locale": "en-GB",
+    "intent": {
+      "name": "FetchMoreResultsIntent",
+      "confirmationStatus": "NONE"
+    },
+    "dialogState": "STARTED"
+  }
+}

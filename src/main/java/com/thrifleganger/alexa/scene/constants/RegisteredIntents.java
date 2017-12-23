@@ -6,6 +6,8 @@ public enum RegisteredIntents {
     GIG_SEARCH("GigSearchIntent"),
     FETCH_MORE_RESULTS("FetchMoreResultsIntent"),
     EXPAND_RESULTS("ExpandResultsIntent"),
+    YES("YesIntent"),
+    NO("NoIntent"),
     HELP("AMAZON.HelpIntent"),
     CANCEL("AMAZON.CancelIntent"),
     STOP("AMAZON.StopIntent");

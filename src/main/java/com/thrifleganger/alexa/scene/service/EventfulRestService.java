@@ -7,6 +7,8 @@ import com.thrifleganger.alexa.scene.model.eventful.EventfulRequest;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.Field;
+import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -52,7 +55,7 @@ public class EventfulRestService {
             log.info("Sending request to Eventful: " + generateRestEndpointUrl(request));
             return RestResult.success(
                     new ObjectMapper().readValue(
-                            response.getBody(),
+                            cleanUpResponseBody(response.getBody()),
                             EventfulResponse.class
                     )
             );
@@ -116,5 +119,19 @@ public class EventfulRestService {
 
     private String eliminateWhiteSpace(final String string) {
         return string.replaceAll(" ", "+");
+    }
+
+    private String cleanUpResponseBody(final String response) {
+        final String nonHtml = Jsoup.parse(Jsoup.clean(
+                response
+                    .replaceAll("<br>", ". ")
+                    .replaceAll("</br>", ". ")
+                    .replaceAll("&quot;", "")
+                    .replaceAll("&amp;", "and")
+                    .replaceAll("&lt;", "")
+                    .replaceAll("&gt", ""),
+                Whitelist.basic())).text();
+        return Normalizer.normalize(nonHtml, Normalizer.Form.NFD)
+                .replaceAll("[^\\p{ASCII}]", "");
     }
 }

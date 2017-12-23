@@ -1,0 +1,13 @@
+{
+  "shouldEndSession": false,
+  "outputSpeech": {
+    "type": "PlainText",
+    "text": "This is not a valid response here. You can try again, or just say Help, for a walkthrough. "
+  },
+  "reprompt": {
+    "outputSpeech": {
+      "type": "PlainText",
+      "text": "This is not a valid response here. You can try again, or just say Help, for a walkthrough. "
+    }
+  }
+}

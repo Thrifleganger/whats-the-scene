@@ -1,5 +1,6 @@
 package com.thrifleganger.alexa.scene.utils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -19,5 +20,10 @@ public class DateUtil {
     public static String getFormattedTime(String dateTime) {
 
         return convertToLocalDateTime(dateTime).toLocalTime().truncatedTo(ChronoUnit.MINUTES).toString();
+    }
+
+    public static LocalDate convertToDateOnlyFormat(String date) {
+
+        return LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }

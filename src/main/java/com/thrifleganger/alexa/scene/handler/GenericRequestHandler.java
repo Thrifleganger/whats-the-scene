@@ -64,21 +64,21 @@ public class GenericRequestHandler {
         final StringBuilder cardTitleBuilder = new StringBuilder();
         final StringBuilder cardContentBuilder = new StringBuilder();
 
-        handleSingleAndMultipleResponsesForConversation(conversationBuilder, eventfulResponse);
-        handleSingleAndMultipleResponsesForCard(cardTitleBuilder, eventfulResponse);
+        handleSingleAndMultipleResponsesForConversation(conversationBuilder, eventfulResponse, requestEnvelope);
+        handleSingleAndMultipleResponsesForCard(cardTitleBuilder, eventfulResponse, requestEnvelope);
 
         final AtomicInteger voiceCounter = new AtomicInteger();
         final AtomicInteger cardCounter = new AtomicInteger();
         eventfulResponse.getEvents().getEvent()
                 .forEach(eventDataModel -> {
                             conversationBuilder.append(String.format(
-                                    Ssml.RESULT_EXPANDED,
+                                    Ssml.SUMMARIZE_RESULT,
                                     voiceCounter.incrementAndGet(),
-                                    utils.checkForNull(validateSsml(eventDataModel.getTitle()), Conversation.UNKNOWN_EVENT),
-                                    utils.checkForNull(validateSsml(eventDataModel.getVenueName()), Conversation.UNKNOWN_VENUE),
+                                    utils.checkForNull(utils.validateSsml(eventDataModel.getTitle()), Conversation.UNKNOWN_EVENT),
+                                    utils.checkForNull(utils.validateSsml(eventDataModel.getVenueName()), Conversation.UNKNOWN_VENUE),
                                     utils.checkForNull(DateUtil.getFormattedDate(eventDataModel.getStartTime()), Conversation.UNKNOWN_DATE),
                                     utils.checkForNull(DateUtil.getFormattedTime(eventDataModel.getStartTime()), Conversation.UNKNOWN_TIME),
-                                    utils.checkForNull(validateSsml(eventDataModel.getCityName()), Conversation.UNKNOWN_LOCATION)
+                                    utils.checkForNull(utils.validateSsml(eventDataModel.getCityName()), Conversation.UNKNOWN_LOCATION)
                                     )
                             );
                             cardContentBuilder.append(String.format(
@@ -94,7 +94,7 @@ public class GenericRequestHandler {
                 );
         repromptBuilder.append(Conversation.GENERIC_REPROMT);
         if(moreResultsAvailable(requestEnvelope)) {
-            savePathStateToSession(requestEnvelope, PathState.AWAITING_MORE_RESULT_OR_MORE_DETAILS);
+            savePathStateToSession(requestEnvelope, PathState.AWAITING_MORE_RESULTS_OR_MORE_DETAILS);
             conversationBuilder.append(Conversation.FETCH_MORE_RESULTS);
             repromptBuilder.append(Conversation.FETCH_MORE_RESULTS);
         }
@@ -121,51 +121,58 @@ public class GenericRequestHandler {
         );
     }
 
-    private String validateSsml(final String ssml) {
-        return ssml.replaceAll("&", "and")
-                .replaceAll("<", "")
-                .replaceAll(">", "");
-
-    }
-
     private boolean moreResultsAvailable(final SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
 
-        final Integer total = (Integer) requestEnvelope.getSession().getAttribute(SessionAttributes.TOTAL_NUMBER_RESULTS.getValue());
-        final Integer maxPageSize = (Integer) requestEnvelope.getSession().getAttribute(SessionAttributes.MAX_PAGE_SIZE.getValue());
-        final Integer currentPageNumber = (Integer) requestEnvelope.getSession().getAttribute(SessionAttributes.CURRENT_PAGE_NUMBER.getValue());
+        final Integer total = (Integer) utils.getSessionAttribute(
+                requestEnvelope, SessionAttributes.TOTAL_NUMBER_RESULTS).orElse(0);
+        final Integer maxPageSize = (Integer) utils.getSessionAttribute(
+                requestEnvelope, SessionAttributes.MAX_PAGE_SIZE).orElse(0);
+        final Integer currentPageNumber = (Integer) utils.getSessionAttribute(
+                requestEnvelope, SessionAttributes.CURRENT_PAGE_NUMBER).orElse(0);
         return total - (maxPageSize * currentPageNumber) > 0;
     }
 
-    private void saveRestResultToSession(final SpeechletRequestEnvelope<IntentRequest> requestEnvelope,
-                                         final EventfulRequest eventfulRequest,
-                                         final EventfulResponse eventfulResponse
+    private void saveRestResultToSession(
+            final SpeechletRequestEnvelope<IntentRequest> requestEnvelope,
+            final EventfulRequest eventfulRequest,
+            final EventfulResponse eventfulResponse
     ) {
         requestEnvelope.getSession().setAttribute(SessionAttributes.EVENTFUL_REQUEST.getValue(), eventfulRequest);
+        requestEnvelope.getSession().setAttribute(SessionAttributes.EVENTFUL_RESPONSE.getValue(), eventfulResponse);
         requestEnvelope.getSession().setAttribute(SessionAttributes.TOTAL_NUMBER_RESULTS.getValue(), eventfulResponse.getTotalItems());
         requestEnvelope.getSession().setAttribute(SessionAttributes.CURRENT_PAGE_NUMBER.getValue(), utils.generateNextPageNumber(requestEnvelope));
         requestEnvelope.getSession().setAttribute(SessionAttributes.CURRENT_PAGE_SIZE.getValue(), eventfulResponse.getEvents().getEvent().size());
         requestEnvelope.getSession().setAttribute(SessionAttributes.MAX_PAGE_SIZE.getValue(), 5);
     }
 
-    private void handleSingleAndMultipleResponsesForConversation(StringBuilder string, EventfulResponse response) {
-        if(!utils.isNull(response.getTotalItems()) && response.getTotalItems() == 1) {
+    private void handleSingleAndMultipleResponsesForConversation(
+            final StringBuilder string,
+            final EventfulResponse response,
+            final SpeechletRequestEnvelope<IntentRequest> requestEnvelope
+    ) {
+        if(utils.getCurrentPathState(requestEnvelope).equals(PathState.AWAITING_MORE_RESULTS_OR_MORE_DETAILS)) {
+            string.append(String.format(Conversation.READING_OUT_NEXT_PAGE, getNumberOfResultsOnCurrentPage(response)));
+        } else if(!utils.isNull(response.getTotalItems()) && response.getTotalItems() == 1) {
             string.append(Conversation.ONE_RESULT_FOUND);
         } else if(!utils.isNull(response.getTotalItems())) {
             string.append(String.format(Conversation.FOUND_RESULTS, response.getTotalItems()))
-                    .append(String.format(Conversation.READING_OUT_RESULTS,
-                            utils.checkForNull(
-                                    response.getPageItems(),
-                                    Integer.toString(response.getEvents().getEvent().size())
-                            )
-                    ));
+                    .append(String.format(Conversation.READING_OUT_RESULTS, getNumberOfResultsOnCurrentPage(response)));
         }
     }
 
-    private void handleSingleAndMultipleResponsesForCard(final StringBuilder string, final EventfulResponse response) {
+    private void handleSingleAndMultipleResponsesForCard(
+            final StringBuilder string,
+            final EventfulResponse response,
+            final SpeechletRequestEnvelope<IntentRequest> requestEnvelope
+    ) {
         if(!utils.isNull(response.getTotalItems()) && response.getTotalItems() == 1) {
             string.append(Conversation.ONE_RESULT_FOUND);
         } else if(!utils.isNull(response.getTotalItems())) {
-            string.append(String.format(Conversation.FOUND_RESULTS, response.getTotalItems()));
+            string.append(String.format(
+                    Conversation.FOUND_RESULTS_WITH_PAGE_NUMBER,
+                    response.getTotalItems(),
+                    utils.getSessionAttribute(requestEnvelope, SessionAttributes.CURRENT_PAGE_NUMBER).orElse(1)
+            ));
         }
     }
 
@@ -173,6 +180,13 @@ public class GenericRequestHandler {
                                        final PathState pathState
     ) {
         requestEnvelope.getSession().setAttribute(SessionAttributes.PATH_STATE.getValue(), pathState);
+    }
+
+    private String getNumberOfResultsOnCurrentPage(final EventfulResponse eventfulResponse) {
+        return utils.checkForNull(
+                eventfulResponse.getPageItems(),
+                Integer.toString(eventfulResponse.getEvents().getEvent().size())
+        );
     }
     
 }
