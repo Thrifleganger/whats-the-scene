@@ -1,13 +1,7 @@
 {
-  "shouldEndSession": false,
+  "shouldEndSession": true,
   "outputSpeech": {
     "type": "PlainText",
-    "text": "Let's start over. Welcome to what's the scene. You can ask me something specific, or just say, What's going on, for an interactive walkthrough. "
-  },
-  "reprompt": {
-    "outputSpeech": {
-      "type": "PlainText",
-      "text": "I didn't get a response. You can ask me something specific, or just say, What's going on in town, for an interactive walkthrough. "
-    }
+    "text": "Thank you for using event space. Good bye! "
   }
 }

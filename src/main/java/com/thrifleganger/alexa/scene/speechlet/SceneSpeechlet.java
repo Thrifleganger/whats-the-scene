@@ -51,11 +51,10 @@ public class SceneSpeechlet implements SpeechletV2 {
                 return eventfulHandler.handleExpandResults(speechletRequestEnvelope);
             case STOP:
             case NO:
+            case CANCEL:
                 return eventfulHandler.handleStopEvent(speechletRequestEnvelope);
             case HELP:
                 return eventfulHandler.handleHelpEvent(speechletRequestEnvelope);
-            case CANCEL:
-                return eventfulHandler.handleCancelEvent(speechletRequestEnvelope);
             default:
                 throw new IllegalArgumentException("Unknown Intent: " + incomingIntent.getName());
         }

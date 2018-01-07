@@ -10,6 +10,7 @@ import com.thrifleganger.alexa.scene.constants.SessionAttributes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -55,6 +56,8 @@ public class EventfulHandlerUtils {
     }
 
     public String validateSsml(final String ssml) {
+        if(Objects.isNull(ssml))
+            return null;
         return ssml.replaceAll("&", "and")
                 .replaceAll("<", "")
                 .replaceAll(">", "");
