@@ -4,7 +4,7 @@ public class Conversation {
 
     private Conversation() {}
 
-    public static final String WELCOME = "Welcome to what's the scene. You can ask me something specific, or just say, What's going on, for an interactive walkthrough. ";
+    public static final String WELCOME = "Welcome to event space. You can ask me something specific, or just say, What's going on, for an interactive walkthrough. ";
     public static final String RESTART = "Let's start over. ";
     public static final String ERROR_HITTING_ENDPOINT = "Sorry, something went wrong while fetching the data. ";
     public static final String NO_RESULTS_FOUND = "No results were found for this query. ";
@@ -12,7 +12,7 @@ public class Conversation {
     public static final String ONE_RESULT_FOUND = "1 result found. ";
     public static final String READING_OUT_RESULTS = "Reading out the first %s results. ";
     public static final String READING_OUT_NEXT_PAGE = "Reading out the next %s results. ";
-    public static final String GOODBYE = "Thank you for using What's the scene. Good bye! ";
+    public static final String GOODBYE = "Thank you for using event space. Good bye! ";
     public static final String FETCH_MORE_RESULTS = "Would you like me to fetch more results? Or, ";
     public static final String EXPAND_MANY_FURTHER = "just recite the number of the entry that you heard for a more detailed description. ";
     public static final String EXPAND_ONE_RESULT_FURTHER = "Would you like a more detailed description for this result? ";
