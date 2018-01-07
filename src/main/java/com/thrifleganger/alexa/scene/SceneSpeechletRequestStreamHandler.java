@@ -16,7 +16,7 @@ public class SceneSpeechletRequestStreamHandler extends SpeechletRequestStreamHa
     private static final Set<String> supportedApplicationIds;
     static {
         supportedApplicationIds = new HashSet<String>();
-        supportedApplicationIds.add("amzn1.ask.skill.11fbb08b-fe35-4995-b585-7b888737ac5a");
+        supportedApplicationIds.add("amzn1.ask.skill.d57c5c5a-f619-4b1f-8fca-a5b5a3dc9c71");
     }
 
     public SceneSpeechletRequestStreamHandler() {
