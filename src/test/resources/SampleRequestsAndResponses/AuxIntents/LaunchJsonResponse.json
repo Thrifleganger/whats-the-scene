@@ -2,7 +2,7 @@
   "shouldEndSession": false,
   "outputSpeech": {
     "type": "PlainText",
-    "text": "Welcome to what's the scene. You can ask me something specific, or just say, What's going on, for an interactive walkthrough. "
+    "text": "Welcome to event space. You can ask me something specific, or just say, What's going on, for an interactive walkthrough. "
   },
   "reprompt": {
     "outputSpeech": {

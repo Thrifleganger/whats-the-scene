@@ -5,6 +5,8 @@ import com.thrifleganger.alexa.scene.configuration.EventfulEventProperties;
 import com.thrifleganger.alexa.scene.exception.handler.RestResult;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulRequest;
 import com.thrifleganger.alexa.scene.model.eventful.EventfulResponse;
+import com.thrifleganger.alexa.scene.model.eventful.enumeration.Category;
+import com.thrifleganger.alexa.scene.model.eventful.enumeration.Number;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -76,7 +78,7 @@ public class EventfulRestService {
             urlString.append(SEPARATOR)
                     .append(CATEGORY)
                     .append(EQUALS)
-                    .append(eliminateWhiteSpace(request.getCategory()));
+                    .append(eliminateWhiteSpace(replaceValidCategory(request.getCategory())));
         }
         if(!Objects.isNull(request.getDate())) {
             urlString.append(SEPARATOR)
@@ -129,9 +131,19 @@ public class EventfulRestService {
                     .replaceAll("&quot;", "")
                     .replaceAll("&amp;", "and")
                     .replaceAll("&lt;", "")
-                    .replaceAll("&gt", ""),
+                    .replaceAll("&gt", "")
+                    .replaceAll("\\\\\"", "'")
+                    .replaceAll("\\\\", ""),
                 Whitelist.basic())).text();
         return Normalizer.normalize(nonHtml, Normalizer.Form.NFD)
                 .replaceAll("[^\\p{ASCII}]", "");
+    }
+
+    private String replaceValidCategory(final String value) {
+        return Arrays.stream(Category.values())
+                .filter(category -> category.getDescription().contains(value))
+                .map(Category::getKeyword)
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
     }
 }

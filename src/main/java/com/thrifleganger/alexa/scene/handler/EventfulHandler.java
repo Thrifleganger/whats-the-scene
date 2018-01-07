@@ -176,7 +176,7 @@ public class EventfulHandler {
     private String returnTypeSafeCategoryFor(final String value) {
         return Arrays.stream(Category.values())
                 .filter(category -> category.getTags().contains(value))
-                .map(Category::getKeyword)
+                .map(Category::getDescription)
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }

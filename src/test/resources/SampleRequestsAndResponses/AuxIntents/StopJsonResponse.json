@@ -2,6 +2,6 @@
   "shouldEndSession": true,
   "outputSpeech": {
     "type": "PlainText",
-    "text": "Thank you for using What's the scene. Good bye! "
+    "text": "Thank you for using event space. Good bye! "
   }
 }
